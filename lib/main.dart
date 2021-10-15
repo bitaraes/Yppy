@@ -39,8 +39,6 @@ class HomeState extends State<Home> {
     return username;
   }
 
-  var numbers = getPosts();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,10 +72,9 @@ class HomeState extends State<Home> {
               child: IconButton(
                 icon: Icon(
                   Icons.notifications,
+                  color: Colors.black,
                 ),
-                onPressed: () {
-                  getPosts();
-                },
+                onPressed: () {},
               ),
             ),
           ],
@@ -87,7 +84,82 @@ class HomeState extends State<Home> {
       body: ListView(
         children: [
           Container(height: 180, child: Carousel()),
-          Column(children: numbers.map((e) => e))
+          FutureBuilder(
+              future: getPosts(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  var postData = snapshot.data
+                      .map<Widget>((e) => Container(
+                            padding: EdgeInsets.all(15),
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(color: Colors.grey))),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.all(10),
+                                      child: CircleAvatar(
+                                        radius: 35,
+                                        backgroundColor: Colors.black,
+                                        child: Text(
+                                          'Photo',
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.all(15),
+                                      child: Text(
+                                        e['title'],
+                                        style: TextStyle(fontSize: 22),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      child: Center(
+                                        child: Container(
+                                          margin: EdgeInsets.only(
+                                              left: 15, right: 15),
+                                          constraints:
+                                              BoxConstraints(maxHeight: 250),
+                                          child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              child: Image(
+                                                  image: NetworkImage(
+                                                      'https://lh3.googleusercontent.com/proxy/ZarbMey813Kt3SIlywrEwFyLFj0gciLQHMgQVh6e3V8E6mja2C9qcYL0_62p1HQq4huvUWo14narZy33cN4J4qhScRkW1aZ1_nzssJpRsjwlf5Hlp1HwVHCFWH3dzs5Lc9zSB2yfD4wtI61Gr-qyMgWdLRPQkQ'),
+                                                  fit: BoxFit.cover)),
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Text(e['description']),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ))
+                      .toList();
+                  return Column(
+                    children: postData,
+                  );
+                } else {
+                  return Center(
+                    child: Text('12'),
+                  );
+                }
+              })
         ],
       ),
       drawer: Drawer(

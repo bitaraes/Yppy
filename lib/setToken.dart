@@ -1,8 +1,3 @@
-import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/models/item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart';
 
@@ -45,7 +40,7 @@ getPosts() async {
   var token =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYjdmZTk5NzU1MzExMzI5MDU0NjhhOCIsImlhdCI6MTYzNDI0NDI4NywiZXhwIjoxNjM0ODQ5MDg3fQ.Y4e9VtQcQB-PB86xieek0I8Fk_n4LxZd6H1-bRcMOJo";
   try {
-    Response response = await dio.get('http://10.0.2.2:8080/comics',
+    final response = await dio.get<List>('http://10.0.2.2:8080/comics',
         options: Options(
             headers: {"Authorization": 'Bearer $token'},
             followRedirects: false,
@@ -53,14 +48,10 @@ getPosts() async {
               return status <= 500;
             }));
     if (response.statusCode == 200) {
-      var list = (response.data as List)
-          .map<Widget>((current) => Container(
-                child: Container(child: current),
-              ))
-          .toList();
-      return list;
+      return response.data;
     }
   } on DioError catch (e) {
-    print(e);
+    throw (e);
   }
+  return null;
 }
