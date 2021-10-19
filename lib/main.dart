@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/login_page.dart';
+import 'package:flutter_application_1/profile.dart';
 import 'package:flutter_application_1/setToken.dart';
 import 'package:flutter_application_1/signup.dart';
 import 'package:dio/dio.dart';
@@ -17,6 +18,7 @@ class MeuAplicativo extends StatelessWidget {
         '/': (context) => Home(),
         '/login': (context) => Login(),
         '/signup': (context) => Cadastrar(),
+        '/profile': (context) => Profile(),
       },
       debugShowCheckedModeBanner: false,
     );
@@ -205,7 +207,9 @@ class HomeState extends State<Home> {
                 icon: Icon(
                   Icons.person_sharp,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/profile');
+                },
               ),
             ],
           ),
