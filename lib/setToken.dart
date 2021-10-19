@@ -49,9 +49,10 @@ getPosts() async {
             }));
     if (response.statusCode == 200) {
       return response.data;
+    } else {
+      print('Ocorreu um erro');
     }
   } on DioError catch (e) {
-    throw (e);
+    throw Exception(e);
   }
-  return null;
 }

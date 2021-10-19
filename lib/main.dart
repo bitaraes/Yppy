@@ -137,13 +137,16 @@ class HomeState extends State<Home> {
                                                   BorderRadius.circular(8),
                                               child: Image(
                                                   image: NetworkImage(
-                                                      'https://lh3.googleusercontent.com/proxy/ZarbMey813Kt3SIlywrEwFyLFj0gciLQHMgQVh6e3V8E6mja2C9qcYL0_62p1HQq4huvUWo14narZy33cN4J4qhScRkW1aZ1_nzssJpRsjwlf5Hlp1HwVHCFWH3dzs5Lc9zSB2yfD4wtI61Gr-qyMgWdLRPQkQ'),
+                                                      'https://images-na.ssl-images-amazon.com/images/S/cmx-images-prod/Item/712988/712988._SX1600_QL80_TTD_.jpg'),
                                                   fit: BoxFit.cover)),
                                         ),
                                       ),
                                     ),
                                     Container(
-                                      child: Text(e['description']),
+                                      child: Text(
+                                        e['description'],
+                                        style: TextStyle(fontSize: 18),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -155,8 +158,11 @@ class HomeState extends State<Home> {
                     children: postData,
                   );
                 } else {
-                  return Center(
-                    child: Text('12'),
+                  return Container(
+                    margin: EdgeInsets.all(15),
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   );
                 }
               })
@@ -323,9 +329,9 @@ class MyDrawer extends StatelessWidget {
 // ignore: must_be_immutable
 class Carousel extends StatelessWidget {
   var _listSlide = [
-    'https://uploads.jovemnerd.com.br/wp-content/uploads/2021/09/marvels-spider-man-2-sera-mais-sombrio.jpg',
-    'https://image.api.playstation.com/vulcan/img/rnd/202011/0204/sIn6nrGTbHeuIfIRnJMv13vr.png',
-    'https://kanto.legiaodosherois.com.br/w760-h398-gnw-cfill-q80/wp-content/uploads/2021/08/legiao_DrUcdNqhvRzG.jpg.jpeg'
+    'https://www.hdwallpapers.net/previews/spiderman-logo-629.jpg',
+    'https://www.hdwallpapers.net/previews/guardians-of-the-galaxy-628.jpg',
+    'https://www.hdwallpapers.net/previews/the-flash-622.jpg'
   ];
   @override
   Widget build(BuildContext context) {
