@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/setToken.dart';
+import 'package:flutter_application_1/components/bottom_bar/bottom_bar.dart';
 import 'package:flutter_application_1/signup.dart';
 import 'package:flutter_application_1/login_page.dart';
 import 'package:flutter_application_1/main.dart';
+import 'package:flutter_application_1/upload.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -11,6 +12,7 @@ void main() {
       '/login': (context) => Login(),
       '/signup': (context) => Cadastrar(),
       '/profile': (context) => Profile(),
+      '/upload': (context) => Upload(),
     },
   ));
 }
@@ -25,45 +27,7 @@ class ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(
-                icon: Icon(
-                  Icons.home_sharp,
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/');
-                },
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.search_sharp,
-                ),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.library_add_sharp,
-                ),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(Icons.notifications_sharp),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.person_sharp,
-                ),
-                onPressed: () {},
-              ),
-            ],
-          ),
-        ),
-      ),
+      bottomNavigationBar: BottomBar(),
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height * 1,

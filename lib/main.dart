@@ -4,6 +4,8 @@ import 'package:flutter_application_1/login_page.dart';
 import 'package:flutter_application_1/profile.dart';
 import 'package:flutter_application_1/setToken.dart';
 import 'package:flutter_application_1/signup.dart';
+import 'package:flutter_application_1/upload.dart';
+import 'package:flutter_application_1/components/bottom_bar/bottom_bar.dart';
 import 'package:dio/dio.dart';
 
 var dio = Dio();
@@ -19,6 +21,7 @@ class MeuAplicativo extends StatelessWidget {
         '/login': (context) => Login(),
         '/signup': (context) => Cadastrar(),
         '/profile': (context) => Profile(),
+        '/upload': (context) => Upload(),
       },
       debugShowCheckedModeBanner: false,
     );
@@ -83,138 +86,100 @@ class HomeState extends State<Home> {
         ),
         backgroundColor: Colors.white,
       ),
-      body: ListView(
-        children: [
-          Container(height: 180, child: Carousel()),
-          FutureBuilder(
-              future: getPosts(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  var postData = snapshot.data
-                      .map<Widget>((e) => Container(
-                            padding: EdgeInsets.all(15),
-                            decoration: BoxDecoration(
-                                border: Border(
-                                    bottom: BorderSide(color: Colors.grey))),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.all(10),
-                                      child: CircleAvatar(
-                                        radius: 35,
-                                        backgroundColor: Colors.black,
-                                        child: Text(
-                                          'Photo',
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.white,
+      body: Container(
+        child: ListView(
+          children: [
+            Container(height: 180, child: Carousel()),
+            FutureBuilder(
+                future: getPosts(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    var postData = snapshot.data
+                        .map<Widget>((e) => Container(
+                              padding: EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(color: Colors.grey))),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.all(10),
+                                        child: CircleAvatar(
+                                          radius: 35,
+                                          backgroundColor: Colors.black,
+                                          child: Text(
+                                            'Photo',
+                                            style: TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.white,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.all(15),
-                                      child: Text(
-                                        e['title'],
-                                        style: TextStyle(fontSize: 22),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      child: Center(
-                                        child: Container(
-                                          margin: EdgeInsets.only(
-                                              left: 15, right: 15),
-                                          constraints:
-                                              BoxConstraints(maxHeight: 250),
-                                          child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              child: Image(
-                                                  image: NetworkImage(
-                                                      'https://images-na.ssl-images-amazon.com/images/S/cmx-images-prod/Item/712988/712988._SX1600_QL80_TTD_.jpg'),
-                                                  fit: BoxFit.cover)),
+                                      Container(
+                                        margin: EdgeInsets.all(10),
+                                        child: Text(
+                                          e['title'],
+                                          style: TextStyle(fontSize: 22),
                                         ),
                                       ),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        e['description'],
-                                        style: TextStyle(fontSize: 18),
+                                    ],
+                                  ),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        child: Center(
+                                          child: Container(
+                                            margin: EdgeInsets.only(
+                                                left: 15, right: 15),
+                                            constraints:
+                                                BoxConstraints(maxHeight: 250),
+                                            child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                child: Image(
+                                                    image: NetworkImage(
+                                                        'https://images-na.ssl-images-amazon.com/images/S/cmx-images-prod/Item/712988/712988._SX1600_QL80_TTD_.jpg'),
+                                                    fit: BoxFit.cover)),
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ))
-                      .toList();
-                  return Column(
-                    children: postData,
-                  );
-                } else {
-                  return Container(
-                    margin: EdgeInsets.all(15),
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
-                }
-              })
-        ],
+                                      Container(
+                                        child: Text(
+                                          e['description'],
+                                          style: TextStyle(fontSize: 18),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ))
+                        .toList();
+                    return Column(
+                      children: postData,
+                    );
+                  } else {
+                    return Container(
+                      margin: EdgeInsets.all(15),
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
+                })
+          ],
+        ),
       ),
       drawer: Drawer(
         child: MyDrawer(),
       ),
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(
-                icon: Icon(
-                  Icons.home_sharp,
-                  color: Color(0xFF752c98),
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/');
-                },
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.search_sharp,
-                ),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.library_add_sharp,
-                ),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(Icons.notifications_sharp),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.person_sharp,
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/profile');
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
+      bottomNavigationBar: BottomBar(),
     );
   }
 }
@@ -346,6 +311,9 @@ class Carousel extends StatelessWidget {
         items: _listSlide
             .map(
               (e) => Container(
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                    border: Border(bottom: BorderSide(color: Colors.black12))),
                 child: Center(
                   child: Container(
                     constraints: BoxConstraints(minHeight: 160),
