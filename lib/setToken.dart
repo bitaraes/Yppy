@@ -37,16 +37,17 @@ getUser() async {
 
 getPosts() async {
   var token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYjdmZTk5NzU1MzExMzI5MDU0NjhhOCIsImlhdCI6MTYzNDI0NDI4NywiZXhwIjoxNjM0ODQ5MDg3fQ.Y4e9VtQcQB-PB86xieek0I8Fk_n4LxZd6H1-bRcMOJo";
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNmYwZjFiYjA5ODQ1MGFkNGY4YzJmYyIsImlhdCI6MTYzNDg1NTQ3OCwiZXhwIjoxNjM1NDYwMjc4fQ.VVbBBBSkENHNMMVgFfxey4P06sNUoSxg4-lOLHvbWGc";
   try {
     var response = await http.get(
-      Uri.http('10.0.2.2:8080', "/comics"),
+      Uri.http('10.0.2.2:8080', '/comics'),
       headers: {"Authorization": 'Bearer $token'},
     );
     var json = jsonDecode(response.body);
     if (response.statusCode == 200) {
       return json;
     } else {
+      print(response.statusCode);
       print('Ocorreu um erro');
     }
   } catch (e) {

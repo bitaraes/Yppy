@@ -6,9 +6,6 @@ import 'package:flutter_application_1/setToken.dart';
 import 'package:flutter_application_1/signup.dart';
 import 'package:flutter_application_1/upload.dart';
 import 'package:flutter_application_1/components/bottom_bar/bottom_bar.dart';
-import 'package:dio/dio.dart';
-
-var dio = Dio();
 
 void main() => runApp(MeuAplicativo());
 

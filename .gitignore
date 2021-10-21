@@ -9,6 +9,9 @@
 .history
 .svn/
 .md
+node_modules
+src/data
+.vscode
 
 # IntelliJ related
 *.iml
