@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 
 setToken(token) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -36,8 +37,7 @@ getUser() async {
 }
 
 getPosts() async {
-  var token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNmYwZjFiYjA5ODQ1MGFkNGY4YzJmYyIsImlhdCI6MTYzNDg1NTQ3OCwiZXhwIjoxNjM1NDYwMjc4fQ.VVbBBBSkENHNMMVgFfxey4P06sNUoSxg4-lOLHvbWGc";
+  var token = await getToken();
   try {
     var response = await http.get(
       Uri.http('10.0.2.2:8080', '/comics'),
@@ -56,8 +56,7 @@ getPosts() async {
 }
 
 createPost(file, title, gender, description) async {
-  var token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNmYwZjFiYjA5ODQ1MGFkNGY4YzJmYyIsImlhdCI6MTYzNDg1NTQ3OCwiZXhwIjoxNjM1NDYwMjc4fQ.VVbBBBSkENHNMMVgFfxey4P06sNUoSxg4-lOLHvbWGc";
+  var token = await getToken();
   var response =
       http.MultipartRequest('POST', Uri.parse('http://10.0.2.2:8080/comics'))
         ..fields['title'] = title
@@ -65,6 +64,7 @@ createPost(file, title, gender, description) async {
         ..fields["description"] = description
         ..fields['authorId'] = "616f0f1bb098450ad4f8c2fc"
         ..headers['authorization'] = 'Bearer $token'
-        ..files.add(await http.MultipartFile.fromPath('comic', file));
+        ..files.add(await http.MultipartFile.fromPath('comic', file,
+            contentType: MediaType('image', file.toString().split('.').last)));
   response.send().then((value) => print(value.statusCode));
 }
