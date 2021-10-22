@@ -29,7 +29,6 @@ module.exports = {
 	},
 
 	fileFilter: (req, file, cb) => {
-		console.log(file);
 		const alllowMimes = [
 			"image/jpg",
 			"image/jpeg",
@@ -38,7 +37,7 @@ module.exports = {
 			"image/gif",
 		];
 
-		if (alllowMimes) {
+		if (alllowMimes.includes(file.mimetype)) {
 			cb(null, true);
 		} else {
 			cb(new Error("Invalid image type"));

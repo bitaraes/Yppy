@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/login_page.dart';
 import 'package:flutter_application_1/main.dart';
-import 'package:flutter_application_1/components/bottom_bar/bottom_bar.dart';
 import 'package:dio/dio.dart';
 
 var dio = Dio();
@@ -9,8 +8,8 @@ var dio = Dio();
 void main() => runApp(
       MaterialApp(
         routes: {
-          '/': (context) => Home(),
-          '/login': (context) => Login(),
+          '/': (context) => Login(),
+          '/home': (context) => Home(),
           '/signup': (context) => Cadastrar(),
         },
       ),
@@ -96,7 +95,6 @@ class CadastrarState extends State<Cadastrar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomBar(),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());
@@ -266,8 +264,7 @@ class CadastrarState extends State<Cadastrar> {
                           ),
                           Container(
                             child: TextButton(
-                              onPressed: () =>
-                                  {Navigator.pushNamed(context, '/login')},
+                              onPressed: () => {Navigator.pop(context)},
                               child: Text("Ou Faça Login"),
                             ),
                           ),

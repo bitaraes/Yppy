@@ -14,8 +14,8 @@ class MeuAplicativo extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        '/': (context) => Home(),
-        '/login': (context) => Login(),
+        '/': (context) => Login(),
+        '/home': (context) => Home(),
         '/signup': (context) => Cadastrar(),
         '/profile': (context) => Profile(),
         '/upload': (context) => Upload(),
@@ -238,54 +238,15 @@ class MyDrawer extends StatelessWidget {
                   trailing: Icon(Icons.arrow_forward),
                   onTap: () {
                     logout();
-                    Navigator.pushNamed(context, '/');
-                  },
-                ),
-              ],
-            );
-          } else {
-            return ListView(
-              children: [
-                // ignore: missing_required_param
-                UserAccountsDrawerHeader(
-                  decoration: BoxDecoration(
-                    color: Color(0xFF752c98),
-                  ),
-                  accountName: Text("YPPYVERSE"),
-                  currentAccountPicture: CircleAvatar(
-                      backgroundColor: Colors.white, child: Text("Y")),
-                ),
-                ListTile(
-                  leading: Icon(Icons.home),
-                  title: Text("Home"),
-                  subtitle: Text("Ir para Home"),
-                  trailing: Icon(Icons.arrow_forward),
-                  onTap: () {
-                    print('Voltar para o Inicio.');
-                    Navigator.pop(context);
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.login),
-                  title: Text("Login"),
-                  subtitle: Text("Faça Login"),
-                  trailing: Icon(Icons.arrow_forward),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/login');
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.login),
-                  title: Text("Cadastrar"),
-                  subtitle: Text("Crie uma conta"),
-                  trailing: Icon(Icons.arrow_forward),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/signup');
+                    Navigator.of(context).pushReplacementNamed('/');
                   },
                 ),
               ],
             );
           }
+          return CircularProgressIndicator(
+            backgroundColor: Colors.blue,
+          );
         });
   }
 

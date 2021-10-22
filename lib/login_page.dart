@@ -3,7 +3,6 @@ import 'package:flutter_application_1/main.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_application_1/setToken.dart';
 import 'package:flutter_application_1/signup.dart';
-import 'package:flutter_application_1/components/bottom_bar/bottom_bar.dart';
 
 var dio = Dio();
 String email = "";
@@ -11,8 +10,8 @@ String password = "";
 void main() {
   runApp(MaterialApp(
     routes: {
-      '/': (context) => Home(),
-      '/login': (context) => Login(),
+      '/': (context) => Login(),
+      '/home': (context) => Home(),
       '/signup': (context) => Cadastrar(),
     },
   ));
@@ -42,7 +41,7 @@ class LoginState extends State<Login> {
       setUser(username);
       setToken(token);
       if (response.statusCode == 200) {
-        Navigator.pushNamed(context, '/');
+        Navigator.of(context).pushReplacementNamed('/home');
       }
     } on DioError catch (e) {
       showDialog(
@@ -79,202 +78,227 @@ class LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: BottomBar(),
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).requestFocus(FocusNode());
-        },
-        child: SingleChildScrollView(
-          child: Container(
-            height: MediaQuery.of(context).size.height * 1,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/background-roxo.png"),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  isVisible(),
-                  Container(
-                    child: Padding(
-                      padding: EdgeInsets.all(10),
+    return FutureBuilder(
+        future: getToken(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Home();
+          } else {
+            return Scaffold(
+              body: GestureDetector(
+                onTap: () {
+                  FocusScope.of(context).requestFocus(FocusNode());
+                },
+                child: SingleChildScrollView(
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 1,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("assets/background-roxo.png"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: Center(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Wrap(
-                            alignment: WrapAlignment.spaceAround,
-                            runSpacing: 15,
-                            spacing: 10,
-                            children: [
-                              Container(
-                                constraints: BoxConstraints(maxWidth: 200),
-                                width: MediaQuery.of(context).size.width * 0.37,
-                                child: ElevatedButton(
-                                  onPressed: () {},
-                                  child: Text('Facebook'),
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Colors.blue[800],
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(18.0),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                constraints: BoxConstraints(maxWidth: 200),
-                                width: MediaQuery.of(context).size.width * 0.37,
-                                child: ElevatedButton(
-                                  onPressed: () {},
-                                  child: Text('Google'),
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Colors.red[400],
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(18.0),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                          isVisible(),
                           Container(
-                            margin: EdgeInsets.only(bottom: 10),
-                            child: Text(
-                              'ou',
-                            ),
-                          ),
-                          Column(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(bottom: 5),
-                                child: TextField(
-                                  controller: loginController,
-                                  onChanged: (text) {
-                                    email = text;
-                                  },
-                                  keyboardType: TextInputType.emailAddress,
-                                  decoration: InputDecoration(
-                                    labelText: 'Login',
-                                    prefixIcon:
-                                        Icon(Icons.account_circle_outlined),
-                                    suffixIcon: IconButton(
-                                      onPressed: () => loginController.clear(),
-                                      icon: Icon(Icons.clear),
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(top: 5),
-                                child: TextField(
-                                  controller: passController,
-                                  onChanged: (text) {
-                                    password = text;
-                                  },
-                                  obscureText: true,
-                                  decoration: InputDecoration(
-                                    labelText: 'Senha',
-                                    prefixIcon: Icon(Icons.lock),
-                                    suffixIcon: IconButton(
-                                      onPressed: () => passController.clear(),
-                                      icon: Icon(Icons.clear),
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(
-                                  top: 15,
-                                  left: 10,
-                                  right: 10,
-                                ),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    login();
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                      primary: Colors.yellow,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(18.0),
+                            child: Padding(
+                              padding: EdgeInsets.all(10),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Wrap(
+                                    alignment: WrapAlignment.spaceAround,
+                                    runSpacing: 15,
+                                    spacing: 10,
+                                    children: [
+                                      Container(
+                                        constraints:
+                                            BoxConstraints(maxWidth: 200),
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.37,
+                                        child: ElevatedButton(
+                                          onPressed: () {},
+                                          child: Text('Facebook'),
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Colors.blue[800],
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(18.0),
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                      padding:
-                                          EdgeInsets.only(left: 60, right: 60)),
-                                  child: Text(
-                                    'Acessar',
-                                    style: TextStyle(color: Colors.black),
+                                      Container(
+                                        constraints:
+                                            BoxConstraints(maxWidth: 200),
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.37,
+                                        child: ElevatedButton(
+                                          onPressed: () {},
+                                          child: Text('Google'),
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Colors.red[400],
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(18.0),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Wrap(
-                            alignment: WrapAlignment.spaceAround,
-                            spacing: 20,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(top: 10),
-                                child: TextButton(
-                                  onPressed: () =>
-                                      {Navigator.pushNamed(context, '/signup')},
-                                  child: Text(
-                                    'CRIAR CONTA',
-                                    style: TextStyle(color: Colors.black),
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    child: Text(
+                                      'ou',
+                                    ),
                                   ),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(top: 10),
-                                child: TextButton(
-                                  onPressed: () => {},
-                                  child: Text(
-                                    'ESQUECI A SENHA',
-                                    style: TextStyle(color: Colors.black),
+                                  Column(
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(bottom: 5),
+                                        child: TextField(
+                                          controller: loginController,
+                                          onChanged: (text) {
+                                            email = text;
+                                          },
+                                          keyboardType:
+                                              TextInputType.emailAddress,
+                                          decoration: InputDecoration(
+                                            labelText: 'Login',
+                                            prefixIcon: Icon(
+                                                Icons.account_circle_outlined),
+                                            suffixIcon: IconButton(
+                                              onPressed: () =>
+                                                  loginController.clear(),
+                                              icon: Icon(Icons.clear),
+                                            ),
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.only(top: 5),
+                                        child: TextField(
+                                          controller: passController,
+                                          onChanged: (text) {
+                                            password = text;
+                                          },
+                                          obscureText: true,
+                                          decoration: InputDecoration(
+                                            labelText: 'Senha',
+                                            prefixIcon: Icon(Icons.lock),
+                                            suffixIcon: IconButton(
+                                              onPressed: () =>
+                                                  passController.clear(),
+                                              icon: Icon(Icons.clear),
+                                            ),
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                          top: 15,
+                                          left: 10,
+                                          right: 10,
+                                        ),
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            login();
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                              primary: Colors.yellow,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(18.0),
+                                              ),
+                                              padding: EdgeInsets.only(
+                                                  left: 60, right: 60)),
+                                          child: Text(
+                                            'Acessar',
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Wrap(
+                                    alignment: WrapAlignment.spaceAround,
+                                    spacing: 20,
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(top: 10),
+                                        child: TextButton(
+                                          onPressed: () => {
+                                            Navigator.pushNamed(
+                                                context, '/signup')
+                                          },
+                                          child: Text(
+                                            'CRIAR CONTA',
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.only(top: 10),
+                                        child: TextButton(
+                                          onPressed: () => {},
+                                          child: Text(
+                                            'ESQUECI A SENHA',
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
+                            constraints: BoxConstraints(
+                              minWidth: 250,
+                              maxHeight: 440,
+                              maxWidth: 450,
+                            ),
+                            height: MediaQuery.of(context).size.height * 0.60,
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(
+                                style: BorderStyle.solid,
+                                color: Colors.black,
+                                width: 5,
+                              ),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
                           ),
                         ],
                       ),
                     ),
-                    constraints: BoxConstraints(
-                      minWidth: 250,
-                      maxHeight: 440,
-                      maxWidth: 450,
-                    ),
-                    height: MediaQuery.of(context).size.height * 0.60,
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(
-                        style: BorderStyle.solid,
-                        color: Colors.black,
-                        width: 5,
-                      ),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
-        ),
-      ),
-    );
+            );
+          }
+        });
   }
 }

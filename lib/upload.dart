@@ -6,7 +6,6 @@ import 'package:flutter_application_1/main.dart';
 import 'package:flutter_application_1/profile.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_application_1/setToken.dart';
-import 'dart:io';
 
 void main() {
   runApp(MaterialApp(
