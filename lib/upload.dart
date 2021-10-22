@@ -4,6 +4,9 @@ import 'package:flutter_application_1/signup.dart';
 import 'package:flutter_application_1/login_page.dart';
 import 'package:flutter_application_1/main.dart';
 import 'package:flutter_application_1/profile.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:flutter_application_1/setToken.dart';
+import 'dart:io';
 
 void main() {
   runApp(MaterialApp(
@@ -27,6 +30,19 @@ class UploadState extends State<Upload> {
   TextEditingController titleController = TextEditingController();
   TextEditingController genderController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  String file;
+
+  selectImage() async {
+    var fileName =
+        // ignore: invalid_use_of_visible_for_testing_member
+        await ImagePicker.platform.pickImage(source: ImageSource.gallery);
+    if (fileName != null) {
+      file = fileName.path;
+      print(file);
+    } else {
+      print(file);
+    }
+  }
 
   isVisible() {
     if (MediaQuery.of(context).viewInsets.bottom == 0) {
@@ -143,7 +159,9 @@ class UploadState extends State<Upload> {
                         children: [
                           Container(
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                selectImage();
+                              },
                               style: ElevatedButton.styleFrom(
                                   primary: Colors.green[300],
                                   shape: RoundedRectangleBorder(
@@ -159,7 +177,9 @@ class UploadState extends State<Upload> {
                           ),
                           Container(
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                createPost(file, 'ola', 'asdf', 'description');
+                              },
                               style: ElevatedButton.styleFrom(
                                   primary: Colors.yellow,
                                   shape: RoundedRectangleBorder(
