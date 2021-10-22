@@ -3,6 +3,7 @@ import 'package:flutter_application_1/main.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_application_1/setToken.dart';
 import 'package:flutter_application_1/signup.dart';
+import 'package:flutter_application_1/components/bottom_bar/bottom_bar.dart';
 
 var dio = Dio();
 String email = "";
@@ -79,45 +80,7 @@ class LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(
-                icon: Icon(
-                  Icons.home_sharp,
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/');
-                },
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.search_sharp,
-                ),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.library_add_sharp,
-                ),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(Icons.notifications_sharp),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.person_sharp,
-                ),
-                onPressed: () {},
-              ),
-            ],
-          ),
-        ),
-      ),
+      bottomNavigationBar: BottomBar(),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());

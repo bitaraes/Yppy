@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/login_page.dart';
 import 'package:flutter_application_1/main.dart';
+import 'package:flutter_application_1/components/bottom_bar/bottom_bar.dart';
 import 'package:dio/dio.dart';
 
 var dio = Dio();
@@ -95,46 +96,7 @@ class CadastrarState extends State<Cadastrar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(
-                icon: Icon(
-                  Icons.home_sharp,
-                  color: Color(0xFF752c98),
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/');
-                },
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.search_sharp,
-                ),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.library_add_sharp,
-                ),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(Icons.notifications_sharp),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.person_sharp,
-                ),
-                onPressed: () {},
-              ),
-            ],
-          ),
-        ),
-      ),
+      bottomNavigationBar: BottomBar(),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());
