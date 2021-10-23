@@ -33,6 +33,17 @@ class Home extends StatefulWidget {
 
 class HomeState extends State<Home> {
   String username = "";
+
+  assetImage(image) {
+    String url = 'backend/src$image';
+    return ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.40,
+          child: Image(image: AssetImage(url), fit: BoxFit.contain),
+        ));
+  }
+
   mountUser() async {
     String user = await getUser();
     setState(() {
@@ -116,43 +127,43 @@ class HomeState extends State<Home> {
                                           ),
                                         ),
                                       ),
-                                      Container(
-                                        margin: EdgeInsets.all(10),
-                                        child: Text(
-                                          e['title'],
-                                          style: TextStyle(fontSize: 22),
+                                      Expanded(
+                                        child: Container(
+                                          margin: EdgeInsets.all(10),
+                                          child: Text(
+                                            e['title'],
+                                            style: TextStyle(fontSize: 22),
+                                          ),
                                         ),
                                       ),
                                     ],
                                   ),
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        child: Center(
-                                          child: Container(
-                                            margin: EdgeInsets.only(
-                                                left: 15, right: 15),
-                                            constraints:
-                                                BoxConstraints(maxHeight: 250),
-                                            child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                                child: Image(
-                                                    image: NetworkImage(
-                                                        'https://images-na.ssl-images-amazon.com/images/S/cmx-images-prod/Item/712988/712988._SX1600_QL80_TTD_.jpg'),
-                                                    fit: BoxFit.cover)),
+                                  Container(
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          child: Center(
+                                            child: Container(
+                                                margin: EdgeInsets.only(
+                                                    left: 15, right: 15),
+                                                constraints: BoxConstraints(
+                                                    maxHeight: 250),
+                                                child:
+                                                    assetImage(e['comicUrl'])),
                                           ),
                                         ),
-                                      ),
-                                      Container(
-                                        child: Text(
-                                          e['description'],
-                                          style: TextStyle(fontSize: 18),
-                                        ),
-                                      ),
-                                    ],
+                                        Expanded(
+                                          child: Container(
+                                            child: Text(
+                                              e['description'],
+                                              style: TextStyle(fontSize: 18),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),

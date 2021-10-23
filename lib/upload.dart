@@ -30,6 +30,9 @@ class UploadState extends State<Upload> {
   TextEditingController genderController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   String file;
+  String title;
+  String gender;
+  String description;
 
   selectImage() async {
     var fileName =
@@ -40,6 +43,39 @@ class UploadState extends State<Upload> {
       print(file);
     } else {
       print(file);
+    }
+  }
+
+  comicPost() async {
+    if (file != null &&
+        title != null &&
+        gender != null &&
+        description != null) {
+      await createPost(file, title, gender, description);
+      titleController.clear();
+      genderController.clear();
+      descriptionController.clear();
+      file = null;
+    } else {
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: Text(
+            'Erro',
+            textAlign: TextAlign.center,
+          ),
+          content: Text(
+            'Todos os campos devem ser preenchidos',
+            textAlign: TextAlign.center,
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () => {Navigator.pop(context)},
+              child: Text('Voltar'),
+            )
+          ],
+        ),
+      );
     }
   }
 
@@ -99,7 +135,9 @@ class UploadState extends State<Upload> {
                         margin: EdgeInsets.only(bottom: 20),
                         child: TextField(
                           controller: titleController,
-                          onChanged: (text) {},
+                          onChanged: (text) {
+                            title = text;
+                          },
                           keyboardType: TextInputType.name,
                           decoration: InputDecoration(
                             labelText: 'Título',
@@ -118,7 +156,9 @@ class UploadState extends State<Upload> {
                         margin: EdgeInsets.only(bottom: 20),
                         child: TextField(
                           controller: genderController,
-                          onChanged: (text) {},
+                          onChanged: (text) {
+                            gender = text;
+                          },
                           keyboardType: TextInputType.name,
                           decoration: InputDecoration(
                             labelText: 'Gênero',
@@ -138,7 +178,9 @@ class UploadState extends State<Upload> {
                         child: TextField(
                           maxLines: 2,
                           controller: descriptionController,
-                          onChanged: (text) {},
+                          onChanged: (text) {
+                            description = text;
+                          },
                           keyboardType: TextInputType.name,
                           decoration: InputDecoration(
                             labelText: 'Descrição',
@@ -177,7 +219,7 @@ class UploadState extends State<Upload> {
                           Container(
                             child: ElevatedButton(
                               onPressed: () {
-                                createPost(file, 'ola', 'asdf', 'description');
+                                comicPost();
                               },
                               style: ElevatedButton.styleFrom(
                                   primary: Colors.yellow,

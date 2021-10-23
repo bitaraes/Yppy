@@ -38,7 +38,8 @@ class LoginState extends State<Login> {
       password = " ";
       String token = response.data['token'];
       String username = response.data["user"]["username"];
-      setUser(username);
+      String id = response.data["user"]["_id"];
+      setUser(username, id);
       setToken(token);
       if (response.statusCode == 200) {
         Navigator.of(context).pushReplacementNamed('/home');

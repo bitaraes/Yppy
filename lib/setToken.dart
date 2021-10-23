@@ -19,20 +19,22 @@ logout() async {
   await prefs.clear();
 }
 
-setUser(username) async {
+setUser(username, id) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setString('username', username);
+  await prefs.setString('id', id);
 }
 
 getUser() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = await getToken();
   String username = prefs.getString('username');
+  String id = prefs.getString('id');
   if (token == null) {
     return token;
   }
   if (token != null && username != null) {
-    return [username, token];
+    return [username, token, id];
   }
 }
 
@@ -57,14 +59,15 @@ getPosts() async {
 
 createPost(file, title, gender, description) async {
   var token = await getToken();
-  var response =
+  var user = await getUser();
+  var req =
       http.MultipartRequest('POST', Uri.parse('http://10.0.2.2:8080/comics'))
         ..fields['title'] = title
         ..fields['gender'] = gender
         ..fields["description"] = description
-        ..fields['authorId'] = "616f0f1bb098450ad4f8c2fc"
+        ..fields['authorId'] = user[2]
         ..headers['authorization'] = 'Bearer $token'
         ..files.add(await http.MultipartFile.fromPath('comic', file,
             contentType: MediaType('image', file.toString().split('.').last)));
-  response.send().then((value) => print(value.statusCode));
+  req.send().then((value) => print(value.statusCode));
 }
