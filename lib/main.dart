@@ -35,12 +35,12 @@ class HomeState extends State<Home> {
   String username = "";
 
   assetImage(image) {
-    String url = 'backend/src$image';
+    String url = 'http://10.0.2.2/Comics/src$image';
     return ClipRRect(
         borderRadius: BorderRadius.circular(8),
         child: Container(
           width: MediaQuery.of(context).size.width * 0.40,
-          child: Image(image: AssetImage(url), fit: BoxFit.contain),
+          child: Image.network(url, fit: BoxFit.contain),
         ));
   }
 
@@ -102,7 +102,7 @@ class HomeState extends State<Home> {
                 future: getPosts(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    var postData = snapshot.data
+                    var postData = snapshot.data.reversed
                         .map<Widget>((e) => Container(
                               padding: EdgeInsets.all(15),
                               decoration: BoxDecoration(
@@ -266,36 +266,47 @@ class MyDrawer extends StatelessWidget {
 
 // ignore: must_be_immutable
 class Carousel extends StatelessWidget {
-  var _listSlide = [
-    'https://www.hdwallpapers.net/previews/spiderman-logo-629.jpg',
-    'https://www.hdwallpapers.net/previews/guardians-of-the-galaxy-628.jpg',
-    'https://www.hdwallpapers.net/previews/the-flash-622.jpg'
-  ];
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-      child: CarouselSlider(
-        options: CarouselOptions(enlargeCenterPage: true),
-        items: _listSlide
-            .map(
-              (e) => Container(
-                padding: EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(color: Colors.black12))),
-                child: Center(
-                  child: Container(
-                    constraints: BoxConstraints(minHeight: 160),
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child:
-                            Image(image: NetworkImage(e), fit: BoxFit.cover)),
-                  ),
+      child: FutureBuilder(
+          future: getPosts(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              List<String> posts = [];
+              snapshot.data.map((e) => posts.add(e['comicUrl'])).toString();
+              return Container(
+                decoration:
+                    BoxDecoration(border: Border.all(color: Colors.grey)),
+                child: CarouselSlider(
+                  options: CarouselOptions(
+                      disableCenter: true, viewportFraction: 0.4),
+                  items: posts
+                      .map(
+                        (e) => Container(
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(color: Colors.black12))),
+                          child: Center(
+                            child: Container(
+                              constraints: BoxConstraints(minHeight: 160),
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Image(
+                                      image: NetworkImage(
+                                          'http://10.0.2.2/Comics/src$e'),
+                                      fit: BoxFit.cover)),
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
                 ),
-              ),
-            )
-            .toList(),
-      ),
+              );
+            }
+            return Container();
+          }),
     );
   }
 }
