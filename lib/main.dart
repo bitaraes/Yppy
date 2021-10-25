@@ -6,6 +6,7 @@ import 'package:flutter_application_1/services/api.dart';
 import 'package:flutter_application_1/signup.dart';
 import 'package:flutter_application_1/upload.dart';
 import 'package:flutter_application_1/components/bottom_bar/bottom_bar.dart';
+// import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 void main() => runApp(MeuAplicativo());
 
@@ -156,6 +157,15 @@ class HomeState extends State<Home> {
                                               textAlign: TextAlign.center,
                                             ),
                                             Text("Por: " + e['authorId']),
+                                            // RatingBarIndicator(
+                                            //   rating: double.tryParse(
+                                            //       e['rating'].toString()),
+                                            //   itemBuilder: (context, index) =>
+                                            //       Icon(
+                                            //     Icons.star,
+                                            //     color: Colors.amber,
+                                            //   ),
+                                            // ),
                                           ],
                                         ),
                                       ),
