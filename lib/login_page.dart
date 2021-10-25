@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/main.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter_application_1/setToken.dart';
+import 'package:flutter_application_1/services/setToken.dart';
 import 'package:flutter_application_1/signup.dart';
 
-var dio = Dio();
 String email = "";
 String password = "";
 void main() {
@@ -26,42 +24,6 @@ class Login extends StatefulWidget {
 class LoginState extends State<Login> {
   TextEditingController loginController = TextEditingController();
   TextEditingController passController = TextEditingController();
-
-  login() async {
-    try {
-      Response response = await dio.post("http://10.0.2.2:8080/auth",
-          data: {"username": email, "password": password},
-          options: Options(method: 'POST', contentType: 'application/json'));
-      loginController.clear();
-      passController.clear();
-      email = " ";
-      password = " ";
-      String token = response.data['token'];
-      String username = response.data["user"]["username"];
-      String id = response.data["user"]["_id"];
-      setUser(username, id);
-      setToken(token);
-      if (response.statusCode == 200) {
-        Navigator.of(context).pushReplacementNamed('/home');
-      }
-    } on DioError catch (e) {
-      showDialog(
-        context: context,
-        builder: (_) => AlertDialog(
-          title: Text('Erro'),
-          content: Text(
-            e.response.data,
-          ),
-          actions: [
-            ElevatedButton(
-              onPressed: () => {Navigator.pop(context)},
-              child: Text('Ok'),
-            )
-          ],
-        ),
-      );
-    }
-  }
 
   isVisible() {
     if (MediaQuery.of(context).viewInsets.bottom == 0) {
@@ -222,7 +184,26 @@ class LoginState extends State<Login> {
                                         ),
                                         child: ElevatedButton(
                                           onPressed: () {
-                                            login();
+                                            if (email == "" || password == "") {
+                                              showDialog(
+                                                context: context,
+                                                builder: (_) => AlertDialog(
+                                                  title: Text('Erro'),
+                                                  content: Text(
+                                                      'Todos os campos devem ser preenchidos'),
+                                                  actions: [
+                                                    ElevatedButton(
+                                                      onPressed: () => {
+                                                        Navigator.pop(context)
+                                                      },
+                                                      child: Text('Ok'),
+                                                    )
+                                                  ],
+                                                ),
+                                              );
+                                            } else {
+                                              signin(email, password, context);
+                                            }
                                           },
                                           style: ElevatedButton.styleFrom(
                                               primary: Colors.yellow,

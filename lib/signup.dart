@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/login_page.dart';
 import 'package:flutter_application_1/main.dart';
-import 'package:dio/dio.dart';
-
-var dio = Dio();
+import 'package:flutter_application_1/services/setToken.dart';
 
 void main() => runApp(
       MaterialApp(
@@ -26,60 +24,14 @@ class CadastrarState extends State<Cadastrar> {
   TextEditingController userController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  String user = "";
-  String email = "";
-  String password = "";
-  String gender = "Masculino";
-
-  signup() async {
-    try {
-      Response response = await dio.post(
-        "http://10.0.2.2:8080/register",
-        data: {
-          "email": email,
-          "username": user,
-          "password": password,
-          "rating": 0,
-          "description": " ",
-          "gender": gender
-        },
-        options: Options(contentType: 'application/json'),
-      );
-      if (response.statusCode == 200) {
-        showDialog(
-          context: context,
-          builder: (_) => AlertDialog(
-            title: Text('Cadastro Efetuado com Sucesso!'),
-            content: Text(
-              'Clique em ok para fazer login.',
-            ),
-            actions: [
-              ElevatedButton(
-                onPressed: () => {Navigator.pushNamed(context, '/login')},
-                child: Text('Ok'),
-              )
-            ],
-          ),
-        );
-      }
-    } on DioError catch (e) {
-      showDialog(
-        context: context,
-        builder: (_) => AlertDialog(
-          title: Text('Erro'),
-          content: Text(
-            e.response.data["error"],
-          ),
-          actions: [
-            ElevatedButton(
-              onPressed: () => {Navigator.pop(context)},
-              child: Text('Ok'),
-            )
-          ],
-        ),
-      );
-    }
-  }
+  var data = {
+    "email": '',
+    "username": '',
+    "password": '',
+    "rating": 0,
+    "description": " ",
+    "gender": 'Masculino'
+  };
 
   isVisible() {
     if (MediaQuery.of(context).viewInsets.bottom == 0) {
@@ -133,7 +85,7 @@ class CadastrarState extends State<Cadastrar> {
                                 child: TextField(
                                   controller: userController,
                                   onChanged: (text) {
-                                    user = text;
+                                    data['username'] = text;
                                   },
                                   keyboardType: TextInputType.name,
                                   decoration: InputDecoration(
@@ -155,7 +107,7 @@ class CadastrarState extends State<Cadastrar> {
                                 child: TextField(
                                   controller: emailController,
                                   onChanged: (text) {
-                                    email = text;
+                                    data['email'] = text;
                                   },
                                   keyboardType: TextInputType.emailAddress,
                                   decoration: InputDecoration(
@@ -177,7 +129,7 @@ class CadastrarState extends State<Cadastrar> {
                                 child: TextField(
                                   controller: passwordController,
                                   onChanged: (text) {
-                                    password = text;
+                                    data['password'] = text;
                                   },
                                   obscureText: true,
                                   decoration: InputDecoration(
@@ -203,10 +155,10 @@ class CadastrarState extends State<Cadastrar> {
                                       children: [
                                         Radio(
                                           value: "Masculino",
-                                          groupValue: gender,
+                                          groupValue: data['gender'],
                                           onChanged: (T) {
                                             setState(() {
-                                              gender = T;
+                                              data['gender'] = T;
                                             });
                                           },
                                         ),
@@ -220,10 +172,10 @@ class CadastrarState extends State<Cadastrar> {
                                       children: [
                                         Radio(
                                           value: "Feminino",
-                                          groupValue: gender,
+                                          groupValue: data['gender'],
                                           onChanged: (T) {
                                             setState(() {
-                                              gender = T;
+                                              data['gender'] = T;
                                             });
                                           },
                                         ),
@@ -244,7 +196,27 @@ class CadastrarState extends State<Cadastrar> {
                                 ),
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    signup();
+                                    if (data['email'] != "" ||
+                                        data['username'] != "" ||
+                                        data['password'] != "") {
+                                      signup(data, context);
+                                    } else {
+                                      showDialog(
+                                        context: context,
+                                        builder: (_) => AlertDialog(
+                                          title: Text('Erro'),
+                                          content: Text(
+                                              'Todos os campos devem ser preenchidos'),
+                                          actions: [
+                                            ElevatedButton(
+                                              onPressed: () =>
+                                                  {Navigator.pop(context)},
+                                              child: Text('Ok'),
+                                            )
+                                          ],
+                                        ),
+                                      );
+                                    }
                                   },
                                   style: ElevatedButton.styleFrom(
                                       primary: Colors.yellow,

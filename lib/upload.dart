@@ -5,7 +5,7 @@ import 'package:flutter_application_1/login_page.dart';
 import 'package:flutter_application_1/main.dart';
 import 'package:flutter_application_1/profile.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter_application_1/setToken.dart';
+import 'package:flutter_application_1/services/setToken.dart';
 
 void main() {
   runApp(MaterialApp(

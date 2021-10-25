@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/login_page.dart';
 import 'package:flutter_application_1/profile.dart';
-import 'package:flutter_application_1/setToken.dart';
+import 'package:flutter_application_1/services/setToken.dart';
 import 'package:flutter_application_1/signup.dart';
 import 'package:flutter_application_1/upload.dart';
 import 'package:flutter_application_1/components/bottom_bar/bottom_bar.dart';
