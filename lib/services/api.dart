@@ -4,9 +4,11 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:flutter/material.dart';
 
+var api = "http://10.0.2.2:8080";
+
 signin(email, password, context) async {
   var req = await http.post(
-    Uri.parse("http://10.0.2.2:8080/auth"),
+    Uri.parse(api + "/auth"),
     headers: {
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -38,7 +40,7 @@ signin(email, password, context) async {
 
 signup(data, context) async {
   var req = await http.post(
-    Uri.parse("http://10.0.2.2:8080/register"),
+    Uri.parse(api + "/register"),
     body: jsonEncode({
       "email": data['email'],
       "username": data['username'],
@@ -123,10 +125,11 @@ getUser() async {
 }
 
 getPosts() async {
-  var token = await getToken();
+  String token = await getToken();
+  String url = api + '/comics';
   try {
     var response = await http.get(
-      Uri.http('10.0.2.2:8080', '/comics'),
+      Uri.parse(url),
       headers: {"Authorization": 'Bearer $token'},
     );
     var json = jsonDecode(response.body);
@@ -141,17 +144,62 @@ getPosts() async {
   }
 }
 
-createPost(file, title, gender, description) async {
+createPost(file, title, gender, description, context) async {
   var token = await getToken();
   var user = await getUser();
-  var req =
-      http.MultipartRequest('POST', Uri.parse('http://10.0.2.2:8080/comics'))
-        ..fields['title'] = title
-        ..fields['gender'] = gender
-        ..fields["description"] = description
-        ..fields['authorId'] = user[2]
-        ..headers['authorization'] = 'Bearer $token'
-        ..files.add(await http.MultipartFile.fromPath('comic', file,
-            contentType: MediaType('image', file.toString().split('.').last)));
-  req.send().then((value) => print(value.statusCode));
+  var req = http.MultipartRequest('POST', Uri.parse(api + '/comics'))
+    ..fields['title'] = title
+    ..fields['gender'] = gender
+    ..fields["description"] = description
+    ..fields['authorId'] = user[2]
+    ..headers['authorization'] = 'Bearer $token'
+    ..files.add(await http.MultipartFile.fromPath('comic', file,
+        contentType: MediaType('image', file.toString().split('.').last)));
+  req.send().then((response) => {
+        if (response.statusCode == 200)
+          {
+            showDialog(
+              context: context,
+              builder: (_) => AlertDialog(
+                title: Text(
+                  'Sucesso',
+                  textAlign: TextAlign.center,
+                ),
+                content: Text(
+                  'Sua história foi publicada com sucesso!',
+                  textAlign: TextAlign.center,
+                ),
+                actions: [
+                  ElevatedButton(
+                    onPressed: () =>
+                        {Navigator.of(context).pushReplacementNamed('/home')},
+                    child: Text('Ok'),
+                  )
+                ],
+              ),
+            )
+          }
+        else
+          {
+            showDialog(
+              context: context,
+              builder: (_) => AlertDialog(
+                title: Text(
+                  'Erro',
+                  textAlign: TextAlign.center,
+                ),
+                content: Text(
+                  'Aconteceu um erro durante a postagem, tente novamente mais tarde',
+                  textAlign: TextAlign.center,
+                ),
+                actions: [
+                  ElevatedButton(
+                    onPressed: () => {Navigator.pop(context)},
+                    child: Text('Ok'),
+                  )
+                ],
+              ),
+            )
+          }
+      });
 }

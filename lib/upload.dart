@@ -5,7 +5,7 @@ import 'package:flutter_application_1/login_page.dart';
 import 'package:flutter_application_1/main.dart';
 import 'package:flutter_application_1/profile.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter_application_1/services/setToken.dart';
+import 'package:flutter_application_1/services/api.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -43,39 +43,6 @@ class UploadState extends State<Upload> {
       print(file);
     } else {
       print(file);
-    }
-  }
-
-  comicPost() async {
-    if (file != null &&
-        title != null &&
-        gender != null &&
-        description != null) {
-      await createPost(file, title, gender, description);
-      titleController.clear();
-      genderController.clear();
-      descriptionController.clear();
-      file = null;
-    } else {
-      showDialog(
-        context: context,
-        builder: (_) => AlertDialog(
-          title: Text(
-            'Erro',
-            textAlign: TextAlign.center,
-          ),
-          content: Text(
-            'Todos os campos devem ser preenchidos',
-            textAlign: TextAlign.center,
-          ),
-          actions: [
-            ElevatedButton(
-              onPressed: () => {Navigator.pop(context)},
-              child: Text('Voltar'),
-            )
-          ],
-        ),
-      );
     }
   }
 
@@ -219,7 +186,38 @@ class UploadState extends State<Upload> {
                           Container(
                             child: ElevatedButton(
                               onPressed: () {
-                                comicPost();
+                                if (file != null &&
+                                    title != null &&
+                                    gender != null &&
+                                    description != null) {
+                                  createPost(file, title, gender, description,
+                                      context);
+                                  titleController.clear();
+                                  genderController.clear();
+                                  descriptionController.clear();
+                                  file = null;
+                                } else {
+                                  showDialog(
+                                    context: context,
+                                    builder: (_) => AlertDialog(
+                                      title: Text(
+                                        'Erro',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      content: Text(
+                                        'Todos os campos devem ser preenchidos',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      actions: [
+                                        ElevatedButton(
+                                          onPressed: () =>
+                                              {Navigator.pop(context)},
+                                          child: Text('Voltar'),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                }
                               },
                               style: ElevatedButton.styleFrom(
                                   primary: Colors.yellow,

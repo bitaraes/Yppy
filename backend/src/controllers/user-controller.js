@@ -10,8 +10,6 @@ class UserController {
 	}
 
 	async create(req, res) {
-		console.log(req.body);
-		// console.log(res);
 		try {
 			const { email, username } = req.body;
 			if (
@@ -28,7 +26,6 @@ class UserController {
 			});
 			res.status(200).json({ user, token });
 		} catch (err) {
-			console.log(err);
 			return res.status("500").send({
 				message: "Ocorreu um erro no servidor... ",
 				erro: err,
