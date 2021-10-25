@@ -28,14 +28,14 @@ class LoginState extends State<Login> {
   isVisible() {
     if (MediaQuery.of(context).viewInsets.bottom == 0) {
       return Container(
-        margin: EdgeInsets.only(top: 10),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(300), color: Colors.white),
+        margin: EdgeInsets.only(bottom: 15),
         height: MediaQuery.of(context).size.height * 0.20,
-        child: Image.asset("assets/yppy-logo.png"),
+        child: Image.asset("assets/img/fundo_transparente.png"),
       );
     } else {
-      return Container(
-        margin: EdgeInsets.only(top: 25),
-      );
+      return Container();
     }
   }
 
@@ -52,229 +52,184 @@ class LoginState extends State<Login> {
                 onTap: () {
                   FocusScope.of(context).requestFocus(FocusNode());
                 },
-                child: SingleChildScrollView(
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 1,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage("assets/background-roxo.png"),
-                        fit: BoxFit.cover,
-                      ),
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 1,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/img/tela_de_fundo_app.jpg"),
+                      fit: BoxFit.cover,
                     ),
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          isVisible(),
-                          Container(
-                            child: Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Wrap(
-                                    alignment: WrapAlignment.spaceAround,
-                                    runSpacing: 15,
-                                    spacing: 10,
-                                    children: [
-                                      Container(
-                                        constraints:
-                                            BoxConstraints(maxWidth: 200),
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.37,
-                                        child: ElevatedButton(
-                                          onPressed: () {},
-                                          child: Text('Facebook'),
-                                          style: ElevatedButton.styleFrom(
-                                            primary: Colors.blue[800],
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(18.0),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        constraints:
-                                            BoxConstraints(maxWidth: 200),
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.37,
-                                        child: ElevatedButton(
-                                          onPressed: () {},
-                                          child: Text('Google'),
-                                          style: ElevatedButton.styleFrom(
-                                            primary: Colors.red[400],
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(18.0),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    child: Text(
-                                      'ou',
-                                    ),
-                                  ),
-                                  Column(
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.only(bottom: 5),
-                                        child: TextField(
-                                          controller: loginController,
-                                          onChanged: (text) {
-                                            email = text;
-                                          },
-                                          keyboardType:
-                                              TextInputType.emailAddress,
-                                          decoration: InputDecoration(
-                                            labelText: 'Login',
-                                            prefixIcon: Icon(
-                                                Icons.account_circle_outlined),
-                                            suffixIcon: IconButton(
+                  ),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        isVisible(),
+                        Container(
+                          child: Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Column(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(bottom: 5),
+                                      child: TextField(
+                                        controller: loginController,
+                                        onChanged: (text) {
+                                          email = text;
+                                        },
+                                        keyboardType:
+                                            TextInputType.emailAddress,
+                                        decoration: InputDecoration(
+                                          labelText: 'Login',
+                                          labelStyle: TextStyle(
+                                              color: Color(0xFF6d398e)),
+                                          prefixIcon: Icon(
+                                              Icons.account_circle_outlined,
+                                              color: Color(0xFF6d398e)),
+                                          suffixIcon: IconButton(
                                               onPressed: () =>
                                                   loginController.clear(),
                                               icon: Icon(Icons.clear),
-                                            ),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                            ),
+                                              color: Color(0xFF6d398e)),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
                                           ),
                                         ),
                                       ),
-                                      Container(
-                                        margin: EdgeInsets.only(top: 5),
-                                        child: TextField(
-                                          controller: passController,
-                                          onChanged: (text) {
-                                            password = text;
-                                          },
-                                          obscureText: true,
-                                          decoration: InputDecoration(
-                                            labelText: 'Senha',
-                                            prefixIcon: Icon(Icons.lock),
-                                            suffixIcon: IconButton(
-                                              onPressed: () =>
-                                                  passController.clear(),
-                                              icon: Icon(Icons.clear),
-                                            ),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                            ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(top: 5),
+                                      child: TextField(
+                                        controller: passController,
+                                        onChanged: (text) {
+                                          password = text;
+                                        },
+                                        obscureText: true,
+                                        decoration: InputDecoration(
+                                          labelText: 'Senha',
+                                          labelStyle: TextStyle(
+                                              color: Color(0xFF6d398e)),
+                                          prefixIcon: Icon(Icons.lock,
+                                              color: Color(0xFF6d398e)),
+                                          suffixIcon: IconButton(
+                                            onPressed: () =>
+                                                passController.clear(),
+                                            icon: Icon(Icons.clear,
+                                                color: Color(0xFF6d398e)),
+                                          ),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
                                           ),
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                          top: 15,
-                                          left: 10,
-                                          right: 10,
-                                        ),
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            if (email == "" || password == "") {
-                                              showDialog(
-                                                context: context,
-                                                builder: (_) => AlertDialog(
-                                                  title: Text('Erro'),
-                                                  content: Text(
-                                                      'Todos os campos devem ser preenchidos'),
-                                                  actions: [
-                                                    ElevatedButton(
-                                                      onPressed: () => {
-                                                        Navigator.pop(context)
-                                                      },
-                                                      child: Text('Ok'),
-                                                    )
-                                                  ],
-                                                ),
-                                              );
-                                            } else {
-                                              signin(email, password, context);
-                                            }
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                              primary: Colors.yellow,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(18.0),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        top: 15,
+                                        left: 10,
+                                        right: 10,
+                                      ),
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          if (email == "" || password == "") {
+                                            showDialog(
+                                              context: context,
+                                              builder: (_) => AlertDialog(
+                                                title: Text('Erro'),
+                                                content: Text(
+                                                    'Todos os campos devem ser preenchidos'),
+                                                actions: [
+                                                  ElevatedButton(
+                                                    onPressed: () => {
+                                                      Navigator.pop(context)
+                                                    },
+                                                    child: Text('Ok'),
+                                                  )
+                                                ],
                                               ),
-                                              padding: EdgeInsets.only(
-                                                  left: 60, right: 60)),
-                                          child: Text(
-                                            'Acessar',
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          ),
+                                            );
+                                          } else {
+                                            signin(email, password, context);
+                                          }
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                            primary: Color(0xFF6d398e),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(18.0),
+                                            ),
+                                            padding: EdgeInsets.only(
+                                                left: 60, right: 60)),
+                                        child: Text(
+                                          'Acessar',
+                                          style: TextStyle(color: Colors.white),
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                  Wrap(
-                                    alignment: WrapAlignment.spaceAround,
-                                    spacing: 20,
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.only(top: 10),
-                                        child: TextButton(
-                                          onPressed: () => {
-                                            Navigator.pushNamed(
-                                                context, '/signup')
-                                          },
-                                          child: Text(
-                                            'CRIAR CONTA',
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          ),
+                                    ),
+                                  ],
+                                ),
+                                Wrap(
+                                  alignment: WrapAlignment.spaceAround,
+                                  spacing: 20,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(top: 10),
+                                      child: TextButton(
+                                        onPressed: () => {
+                                          Navigator.pushNamed(
+                                              context, '/signup')
+                                        },
+                                        child: Text(
+                                          'CRIAR CONTA',
+                                          style: TextStyle(
+                                              color: Color(0xFF6d398e)),
                                         ),
                                       ),
-                                      Container(
-                                        margin: EdgeInsets.only(top: 10),
-                                        child: TextButton(
-                                          onPressed: () => {},
-                                          child: Text(
-                                            'ESQUECI A SENHA',
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(top: 10),
+                                      child: TextButton(
+                                        onPressed: () => {},
+                                        child: Text(
+                                          'ESQUECI A SENHA',
+                                          style: TextStyle(
+                                              color: Color(0xFF6d398e)),
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            constraints: BoxConstraints(
-                              minWidth: 250,
-                              maxHeight: 440,
-                              maxWidth: 450,
-                            ),
-                            height: MediaQuery.of(context).size.height * 0.60,
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(
-                                style: BorderStyle.solid,
-                                color: Colors.black,
-                                width: 5,
-                              ),
-                              borderRadius: BorderRadius.circular(30),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
+                          constraints: BoxConstraints(
+                            minWidth: 250,
+                            maxHeight: 300,
+                            maxWidth: 450,
+                          ),
+                          height: MediaQuery.of(context).size.height * 0.60,
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
+                              style: BorderStyle.solid,
+                              color: Colors.black,
+                              width: 5,
+                            ),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

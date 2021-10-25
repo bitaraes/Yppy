@@ -37,7 +37,7 @@ class CadastrarState extends State<Cadastrar> {
     if (MediaQuery.of(context).viewInsets.bottom == 0) {
       return Container(
         height: MediaQuery.of(context).size.height * 0.20,
-        child: Image.asset("assets/yppy-logo.png"),
+        child: Image.asset("assets/img/yppy-logo.png"),
       );
     } else {
       return Container();
@@ -56,7 +56,7 @@ class CadastrarState extends State<Cadastrar> {
             height: MediaQuery.of(context).size.height * 1,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/background-roxo.png"),
+                image: AssetImage("assets/img/background-roxo.png"),
                 fit: BoxFit.cover,
               ),
             ),

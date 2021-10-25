@@ -13,6 +13,7 @@ class MeuAplicativo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(fontFamily: 'Acme'),
       routes: {
         '/': (context) => Login(),
         '/home': (context) => Home(),
@@ -67,7 +68,7 @@ class HomeState extends State<Home> {
                 Container(
                   height: 50,
                   child: Image(
-                    image: AssetImage("assets/logo_fundoTransparente.png"),
+                    image: AssetImage("assets/img/fundo_transparente.png"),
                   ),
                 ),
                 Container(
@@ -95,92 +96,91 @@ class HomeState extends State<Home> {
         backgroundColor: Colors.white,
       ),
       body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/img/tela_de_fundo_app.jpg'),
+              fit: BoxFit.cover),
+        ),
         child: ListView(
           children: [
-            Container(height: 180, child: Carousel()),
+            Container(
+              height: 180,
+              child: Carousel(),
+            ),
             FutureBuilder(
-                future: getPosts(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    var postData = snapshot.data.reversed
-                        .map<Widget>((e) => Container(
-                              padding: EdgeInsets.all(15),
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(color: Colors.grey))),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.all(10),
-                                        child: CircleAvatar(
-                                          radius: 35,
-                                          backgroundColor: Colors.black,
-                                          child: Text(
-                                            'Photo',
-                                            style: TextStyle(
-                                              fontSize: 15,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
+              future: getPosts(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  var postData = snapshot.data.reversed
+                      .map<Widget>(
+                        (e) => Container(
+                          width: 1050,
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(color: Colors.grey),
+                            ),
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      child: Center(
                                         child: Container(
-                                          margin: EdgeInsets.all(10),
-                                          child: Text(
-                                            e['title'],
-                                            style: TextStyle(fontSize: 22),
-                                          ),
+                                          constraints:
+                                              BoxConstraints(maxHeight: 150),
+                                          child: assetImage(e['comicUrl']),
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                  Container(
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          child: Center(
-                                            child: Container(
-                                                margin: EdgeInsets.only(
-                                                    left: 15, right: 15),
-                                                constraints: BoxConstraints(
-                                                    maxHeight: 250),
-                                                child:
-                                                    assetImage(e['comicUrl'])),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Container(
-                                            child: Text(
-                                              e['description'],
-                                              style: TextStyle(fontSize: 18),
-                                            ),
-                                          ),
-                                        )
-                                      ],
                                     ),
-                                  ),
-                                ],
+                                    Expanded(
+                                      child: Container(
+                                        padding: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        constraints:
+                                            BoxConstraints(minHeight: 150),
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              e['title'],
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            Text("Por: " + e['authorId']),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ))
-                        .toList();
-                    return Column(
-                      children: postData,
-                    );
-                  } else {
-                    return Container(
-                      margin: EdgeInsets.all(15),
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  }
-                })
+                            ],
+                          ),
+                        ),
+                      )
+                      .toList();
+                  return Column(
+                    children: postData,
+                  );
+                } else {
+                  return Container(
+                    margin: EdgeInsets.all(15),
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                }
+              },
+            ),
           ],
         ),
       ),
@@ -280,16 +280,20 @@ class Carousel extends StatelessWidget {
                     BoxDecoration(border: Border.all(color: Colors.grey)),
                 child: CarouselSlider(
                   options: CarouselOptions(
-                      disableCenter: true, viewportFraction: 0.4),
+                      disableCenter: true, viewportFraction: 0.30),
                   items: posts
                       .map(
                         (e) => Container(
-                          padding: EdgeInsets.all(5),
+                          padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               border: Border(
                                   bottom: BorderSide(color: Colors.black12))),
                           child: Center(
                             child: Container(
+                              padding: EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(15)),
                               constraints: BoxConstraints(minHeight: 160),
                               child: ClipRRect(
                                   borderRadius: BorderRadius.circular(8),

@@ -51,7 +51,7 @@ class UploadState extends State<Upload> {
       return Container(
         margin: EdgeInsets.only(top: 30),
         height: MediaQuery.of(context).size.height * 0.20,
-        child: Image.asset("assets/yppy-logo.png"),
+        child: Image.asset("assets/img/yppy-logo.png"),
       );
     } else {
       return Container(
@@ -73,7 +73,7 @@ class UploadState extends State<Upload> {
             height: MediaQuery.of(context).size.height * 1,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/background-roxo.png"),
+                image: AssetImage("assets/img/background-roxo.png"),
                 fit: BoxFit.cover,
               ),
             ),

@@ -33,7 +33,7 @@ class ProfileState extends State<Profile> {
           height: MediaQuery.of(context).size.height * 1,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/background-roxo.png"),
+              image: AssetImage("assets/img/background-roxo.png"),
               fit: BoxFit.cover,
             ),
           ),
