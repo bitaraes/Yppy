@@ -6,7 +6,7 @@ import 'package:flutter_application_1/services/api.dart';
 import 'package:flutter_application_1/signup.dart';
 import 'package:flutter_application_1/upload.dart';
 import 'package:flutter_application_1/components/bottom_bar/bottom_bar.dart';
-// import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 void main() => runApp(MeuAplicativo());
 
@@ -41,7 +41,7 @@ class HomeState extends State<Home> {
     return ClipRRect(
         borderRadius: BorderRadius.circular(8),
         child: Container(
-          width: MediaQuery.of(context).size.width * 0.40,
+          width: MediaQuery.of(context).size.width * 0.30,
           child: Image.network(url, fit: BoxFit.contain),
         ));
   }
@@ -70,15 +70,6 @@ class HomeState extends State<Home> {
                   height: 50,
                   child: Image(
                     image: AssetImage("assets/img/fundo_transparente.png"),
-                  ),
-                ),
-                Container(
-                  child: Text(
-                    "YPPY",
-                    style: TextStyle(
-                      color: Color(0xFF752c98),
-                      fontSize: 20,
-                    ),
                   ),
                 ),
               ],
@@ -115,27 +106,16 @@ class HomeState extends State<Home> {
                   var postData = snapshot.data.reversed
                       .map<Widget>(
                         (e) => Container(
-                          width: 1050,
                           padding: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(color: Colors.grey),
-                            ),
-                          ),
                           child: Column(
                             children: [
                               Container(
                                 child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
-                                      child: Center(
-                                        child: Container(
-                                          constraints:
-                                              BoxConstraints(maxHeight: 150),
-                                          child: assetImage(e['comicUrl']),
-                                        ),
-                                      ),
+                                      constraints:
+                                          BoxConstraints(maxHeight: 150),
+                                      child: assetImage(e['comicUrl']),
                                     ),
                                     Expanded(
                                       child: Container(
@@ -148,24 +128,57 @@ class HomeState extends State<Home> {
                                         constraints:
                                             BoxConstraints(minHeight: 150),
                                         child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              e['title'],
-                                              style: TextStyle(
-                                                fontSize: 18,
+                                            Container(
+                                              margin:
+                                                  EdgeInsets.only(bottom: 10),
+                                              child: Text(
+                                                e['title'],
+                                                style: TextStyle(
+                                                  fontSize: 22,
+                                                ),
                                               ),
-                                              textAlign: TextAlign.center,
                                             ),
-                                            Text("Por: " + e['authorId']),
-                                            // RatingBarIndicator(
-                                            //   rating: double.tryParse(
-                                            //       e['rating'].toString()),
-                                            //   itemBuilder: (context, index) =>
-                                            //       Icon(
-                                            //     Icons.star,
-                                            //     color: Colors.amber,
-                                            //   ),
-                                            // ),
+                                            Container(
+                                              margin:
+                                                  EdgeInsets.only(bottom: 10),
+                                              child: Text(
+                                                "Autor: " + 'Loren Ipsum',
+                                              ),
+                                            ),
+                                            Container(
+                                              margin:
+                                                  EdgeInsets.only(bottom: 10),
+                                              child: Text(
+                                                  "Gênero: " + e['gender']),
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  margin: EdgeInsets.only(
+                                                      bottom: 10),
+                                                  child:
+                                                      Text("Classificação: "),
+                                                ),
+                                                Container(
+                                                  child: RatingBarIndicator(
+                                                    rating: double.tryParse(
+                                                        e['rating'].toString()),
+                                                    itemBuilder:
+                                                        (context, index) =>
+                                                            Icon(
+                                                      Icons.star,
+                                                      color: Colors.amber,
+                                                    ),
+                                                    itemSize: 30,
+                                                  ),
+                                                ),
+                                              ],
+                                            )
                                           ],
                                         ),
                                       ),

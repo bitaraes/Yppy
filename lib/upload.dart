@@ -49,9 +49,11 @@ class UploadState extends State<Upload> {
   isVisible() {
     if (MediaQuery.of(context).viewInsets.bottom == 0) {
       return Container(
-        margin: EdgeInsets.only(top: 30),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(300), color: Colors.white),
+        margin: EdgeInsets.only(bottom: 10),
         height: MediaQuery.of(context).size.height * 0.20,
-        child: Image.asset("assets/img/yppy-logo.png"),
+        child: Image.asset("assets/img/fundo_transparente.png"),
       );
     } else {
       return Container(
@@ -73,20 +75,20 @@ class UploadState extends State<Upload> {
             height: MediaQuery.of(context).size.height * 1,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/img/background-roxo.png"),
+                image: AssetImage("assets/img/tela_de_fundo_app.jpg"),
                 fit: BoxFit.cover,
               ),
             ),
             child: Center(
                 child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 isVisible(),
                 Container(
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15)),
-                  padding: EdgeInsets.all(25),
+                  padding: EdgeInsets.all(15),
                   width: MediaQuery.of(context).size.width * 0.85,
                   margin: EdgeInsets.only(bottom: 10),
                   child: Column(
@@ -108,10 +110,12 @@ class UploadState extends State<Upload> {
                           keyboardType: TextInputType.name,
                           decoration: InputDecoration(
                             labelText: 'Título',
-                            prefixIcon: Icon(Icons.title),
+                            labelStyle: TextStyle(color: Color(0xFF6d398e)),
+                            prefixIcon:
+                                Icon(Icons.title, color: Color(0xFF6d398e)),
                             suffixIcon: IconButton(
                               onPressed: () => titleController.clear(),
-                              icon: Icon(Icons.clear),
+                              icon: Icon(Icons.clear, color: Color(0xFF6d398e)),
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30),
@@ -129,10 +133,12 @@ class UploadState extends State<Upload> {
                           keyboardType: TextInputType.name,
                           decoration: InputDecoration(
                             labelText: 'Gênero',
-                            prefixIcon: Icon(Icons.attractions),
+                            labelStyle: TextStyle(color: Color(0xFF6d398e)),
+                            prefixIcon: Icon(Icons.attractions,
+                                color: Color(0xFF6d398e)),
                             suffixIcon: IconButton(
                               onPressed: () => genderController.clear(),
-                              icon: Icon(Icons.clear),
+                              icon: Icon(Icons.clear, color: Color(0xFF6d398e)),
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30),
@@ -151,10 +157,12 @@ class UploadState extends State<Upload> {
                           keyboardType: TextInputType.name,
                           decoration: InputDecoration(
                             labelText: 'Descrição',
-                            prefixIcon: Icon(Icons.history_edu),
+                            labelStyle: TextStyle(color: Color(0xFF6d398e)),
+                            prefixIcon: Icon(Icons.history_edu,
+                                color: Color(0xFF6d398e)),
                             suffixIcon: IconButton(
                               onPressed: () => descriptionController.clear(),
-                              icon: Icon(Icons.clear),
+                              icon: Icon(Icons.clear, color: Color(0xFF6d398e)),
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30),
@@ -162,77 +170,69 @@ class UploadState extends State<Upload> {
                           ),
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            child: ElevatedButton(
-                              onPressed: () {
-                                selectImage();
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  primary: Colors.green[300],
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(18.0),
-                                  ),
-                                  padding:
-                                      EdgeInsets.only(left: 20, right: 20)),
-                              child: Text(
-                                'Adicionar arquivo',
-                                style: TextStyle(color: Colors.black),
+                      Container(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            selectImage();
+                          },
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.green[300],
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
                               ),
-                            ),
+                              padding: EdgeInsets.only(left: 20, right: 20)),
+                          child: Text(
+                            'Adicionar arquivo',
+                            style: TextStyle(color: Colors.black),
                           ),
-                          Container(
-                            child: ElevatedButton(
-                              onPressed: () {
-                                if (file != null &&
-                                    title != null &&
-                                    gender != null &&
-                                    description != null) {
-                                  createPost(file, title, gender, description,
-                                      context);
-                                  titleController.clear();
-                                  genderController.clear();
-                                  descriptionController.clear();
-                                  file = null;
-                                } else {
-                                  showDialog(
-                                    context: context,
-                                    builder: (_) => AlertDialog(
-                                      title: Text(
-                                        'Erro',
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      content: Text(
-                                        'Todos os campos devem ser preenchidos',
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      actions: [
-                                        ElevatedButton(
-                                          onPressed: () =>
-                                              {Navigator.pop(context)},
-                                          child: Text('Voltar'),
-                                        )
-                                      ],
-                                    ),
-                                  );
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  primary: Colors.yellow,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(18.0),
+                        ),
+                      ),
+                      Container(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (file != null &&
+                                title != null &&
+                                gender != null &&
+                                description != null) {
+                              createPost(
+                                  file, title, gender, description, context);
+                              titleController.clear();
+                              genderController.clear();
+                              descriptionController.clear();
+                              file = null;
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                  title: Text(
+                                    'Erro',
+                                    textAlign: TextAlign.center,
                                   ),
-                                  padding:
-                                      EdgeInsets.only(left: 20, right: 20)),
-                              child: Text(
-                                'Postar História',
-                                style: TextStyle(color: Colors.black),
+                                  content: Text(
+                                    'Todos os campos devem ser preenchidos',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  actions: [
+                                    ElevatedButton(
+                                      onPressed: () => {Navigator.pop(context)},
+                                      child: Text('Voltar'),
+                                    )
+                                  ],
+                                ),
+                              );
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                              primary: Color(0xFF6d398e),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
                               ),
-                            ),
+                              padding: EdgeInsets.only(left: 20, right: 20)),
+                          child: Text(
+                            'Postar História',
+                            style: TextStyle(color: Colors.white),
                           ),
-                        ],
+                        ),
                       ),
                     ],
                   ),

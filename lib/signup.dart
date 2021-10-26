@@ -36,8 +36,11 @@ class CadastrarState extends State<Cadastrar> {
   isVisible() {
     if (MediaQuery.of(context).viewInsets.bottom == 0) {
       return Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(300), color: Colors.white),
+        margin: EdgeInsets.only(bottom: 10),
         height: MediaQuery.of(context).size.height * 0.20,
-        child: Image.asset("assets/img/yppy-logo.png"),
+        child: Image.asset("assets/img/fundo_transparente.png"),
       );
     } else {
       return Container();
@@ -56,18 +59,18 @@ class CadastrarState extends State<Cadastrar> {
             height: MediaQuery.of(context).size.height * 1,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/img/background-roxo.png"),
+                image: AssetImage("assets/img/tela_de_fundo_app.jpg"),
                 fit: BoxFit.cover,
               ),
             ),
             child: Center(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   isVisible(),
                   Container(
                     child: Padding(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(5),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -75,7 +78,9 @@ class CadastrarState extends State<Cadastrar> {
                             margin: EdgeInsets.only(bottom: 15),
                             child: Text(
                               'Crie uma conta',
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(
+                                fontSize: 20,
+                              ),
                             ),
                           ),
                           Column(
@@ -90,11 +95,15 @@ class CadastrarState extends State<Cadastrar> {
                                   keyboardType: TextInputType.name,
                                   decoration: InputDecoration(
                                     labelText: 'Nome de Usuário',
-                                    prefixIcon:
-                                        Icon(Icons.account_circle_outlined),
+                                    labelStyle:
+                                        TextStyle(color: Color(0xFF6d398e)),
+                                    prefixIcon: Icon(
+                                        Icons.account_circle_outlined,
+                                        color: Color(0xFF6d398e)),
                                     suffixIcon: IconButton(
                                       onPressed: () => userController.clear(),
-                                      icon: Icon(Icons.clear),
+                                      icon: Icon(Icons.clear,
+                                          color: Color(0xFF6d398e)),
                                     ),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(30),
@@ -112,11 +121,15 @@ class CadastrarState extends State<Cadastrar> {
                                   keyboardType: TextInputType.emailAddress,
                                   decoration: InputDecoration(
                                     labelText: 'Email',
-                                    prefixIcon:
-                                        Icon(Icons.account_circle_outlined),
+                                    labelStyle:
+                                        TextStyle(color: Color(0xFF6d398e)),
+                                    prefixIcon: Icon(
+                                        Icons.account_circle_outlined,
+                                        color: Color(0xFF6d398e)),
                                     suffixIcon: IconButton(
                                       onPressed: () => emailController.clear(),
-                                      icon: Icon(Icons.clear),
+                                      icon: Icon(Icons.clear,
+                                          color: Color(0xFF6d398e)),
                                     ),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(30),
@@ -134,11 +147,15 @@ class CadastrarState extends State<Cadastrar> {
                                   obscureText: true,
                                   decoration: InputDecoration(
                                     labelText: 'Senha',
-                                    prefixIcon: Icon(Icons.lock),
+                                    labelStyle:
+                                        TextStyle(color: Color(0xFF6d398e)),
+                                    prefixIcon: Icon(Icons.lock,
+                                        color: Color(0xFF6d398e)),
                                     suffixIcon: IconButton(
                                       onPressed: () =>
                                           passwordController.clear(),
-                                      icon: Icon(Icons.clear),
+                                      icon: Icon(Icons.clear,
+                                          color: Color(0xFF6d398e)),
                                     ),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(30),
@@ -162,7 +179,9 @@ class CadastrarState extends State<Cadastrar> {
                                             });
                                           },
                                         ),
-                                        Text('Masculino'),
+                                        Text(
+                                          'Masculino',
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -179,7 +198,9 @@ class CadastrarState extends State<Cadastrar> {
                                             });
                                           },
                                         ),
-                                        Text('Feminino'),
+                                        Text(
+                                          'Feminino',
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -219,7 +240,7 @@ class CadastrarState extends State<Cadastrar> {
                                     }
                                   },
                                   style: ElevatedButton.styleFrom(
-                                      primary: Colors.yellow,
+                                      primary: Color(0xFF6d398e),
                                       shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(18.0),
@@ -228,7 +249,7 @@ class CadastrarState extends State<Cadastrar> {
                                           EdgeInsets.only(left: 60, right: 60)),
                                   child: Text(
                                     'Criar Conta',
-                                    style: TextStyle(color: Colors.black),
+                                    style: TextStyle(color: Colors.white),
                                   ),
                                 ),
                               ),
@@ -237,7 +258,9 @@ class CadastrarState extends State<Cadastrar> {
                           Container(
                             child: TextButton(
                               onPressed: () => {Navigator.pop(context)},
-                              child: Text("Ou Faça Login"),
+                              child: Text(
+                                "Ou Faça Login",
+                              ),
                             ),
                           ),
                         ],
