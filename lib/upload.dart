@@ -27,12 +27,25 @@ class Upload extends StatefulWidget {
 
 class UploadState extends State<Upload> {
   TextEditingController titleController = TextEditingController();
-  TextEditingController genderController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   String file;
   String title;
-  String gender;
   String description;
+  String dropdownValue;
+  List _generos = [
+    "Ação",
+    "Aventura",
+    "Romance",
+    "Fantasia",
+    "Ficção",
+    "Científica",
+    "Drama",
+    "Terror",
+    "Suspense",
+    "Comédia",
+    "Biografia",
+    "Fanfic"
+  ];
 
   selectImage() async {
     var fileName =
@@ -125,25 +138,44 @@ class UploadState extends State<Upload> {
                       ),
                       Container(
                         margin: EdgeInsets.only(bottom: 20),
-                        child: TextField(
-                          controller: genderController,
-                          onChanged: (text) {
-                            gender = text;
-                          },
-                          keyboardType: TextInputType.name,
-                          decoration: InputDecoration(
-                            labelText: 'Gênero',
-                            labelStyle: TextStyle(color: Color(0xFF6d398e)),
-                            prefixIcon: Icon(Icons.attractions,
-                                color: Color(0xFF6d398e)),
-                            suffixIcon: IconButton(
-                              onPressed: () => genderController.clear(),
-                              icon: Icon(Icons.clear, color: Color(0xFF6d398e)),
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            border: Border.all(color: Color(0xFF6d398e))),
+                        child: DropdownButton(
+                          underline: Container(),
+                          alignment: Alignment.center,
+                          isExpanded: true,
+                          hint: TextField(
+                            decoration: InputDecoration(
+                                labelText: 'Gênero',
+                                labelStyle: TextStyle(color: Color(0xFF6d398e)),
+                                prefixIcon: Icon(Icons.attractions,
+                                    color: Color(0xFF6d398e)),
+                                border: InputBorder.none),
                           ),
+                          value: dropdownValue,
+                          items: _generos
+                              .map(
+                                (current) => DropdownMenuItem(
+                                  value: current,
+                                  child: TextField(
+                                    enabled: false,
+                                    decoration: InputDecoration(
+                                        labelText: current,
+                                        labelStyle:
+                                            TextStyle(color: Color(0xFF6d398e)),
+                                        prefixIcon: Icon(Icons.attractions,
+                                            color: Color(0xFF6d398e)),
+                                        border: InputBorder.none),
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                          onChanged: (newValue) {
+                            setState(() {
+                              dropdownValue = newValue;
+                            });
+                          },
                         ),
                       ),
                       Container(
@@ -192,13 +224,13 @@ class UploadState extends State<Upload> {
                           onPressed: () {
                             if (file != null &&
                                 title != null &&
-                                gender != null &&
+                                dropdownValue != null &&
                                 description != null) {
-                              createPost(
-                                  file, title, gender, description, context);
+                              createPost(file, title, dropdownValue,
+                                  description, context);
                               titleController.clear();
-                              genderController.clear();
                               descriptionController.clear();
+                              dropdownValue = null;
                               file = null;
                             } else {
                               showDialog(

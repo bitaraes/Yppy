@@ -103,7 +103,7 @@ class HomeState extends State<Home> {
               future: getPosts(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  var postData = snapshot.data.reversed
+                  var postData = snapshot.data
                       .map<Widget>(
                         (e) => Container(
                           padding: EdgeInsets.all(5),
@@ -145,14 +145,21 @@ class HomeState extends State<Home> {
                                               margin:
                                                   EdgeInsets.only(bottom: 10),
                                               child: Text(
-                                                "Autor: " + 'Loren Ipsum',
+                                                "Autor: " +
+                                                    e['author']['username'],
                                               ),
                                             ),
                                             Container(
                                               margin:
                                                   EdgeInsets.only(bottom: 10),
-                                              child: Text(
-                                                  "Gênero: " + e['gender']),
+                                              child: Text("Gênero: " +
+                                                  e['gender']
+                                                      .map((current) =>
+                                                          current.toString() +
+                                                          " ")
+                                                      .toString()
+                                                      .replaceAll("(", "")
+                                                      .replaceAll(")", "")),
                                             ),
                                             Column(
                                               crossAxisAlignment:

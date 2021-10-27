@@ -146,13 +146,12 @@ getPosts() async {
 
 createPost(file, title, gender, description, context) async {
   var token = await getToken();
-  var user = await getUser();
   var req = http.MultipartRequest('POST', Uri.parse(api + '/comics'))
     ..fields['title'] = title
     ..fields['gender'] = gender
     ..fields["description"] = description
-    ..fields['authorId'] = user[2]
-    ..headers['authorization'] = 'Bearer $token'
+    ..fields['rating'] = "0"
+    ..headers['Authorization'] = 'Bearer $token'
     ..files.add(await http.MultipartFile.fromPath('comic', file,
         contentType: MediaType('image', file.toString().split('.').last)));
   req.send().then((response) => {
