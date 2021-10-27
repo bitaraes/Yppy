@@ -4,7 +4,7 @@ import 'package:flutter_application_1/signup.dart';
 import 'package:flutter_application_1/login_page.dart';
 import 'package:flutter_application_1/main.dart';
 import 'package:flutter_application_1/profile.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter_application_1/services/api.dart';
 
 void main() {
@@ -50,9 +50,9 @@ class UploadState extends State<Upload> {
   selectImage() async {
     var fileName =
         // ignore: invalid_use_of_visible_for_testing_member
-        await ImagePicker.platform.pickImage(source: ImageSource.gallery);
+        await FilePicker.platform.pickFiles(type: FileType.image);
     if (fileName != null) {
-      file = fileName.path;
+      file = fileName.files.single.path;
       print(file);
     } else {
       print(file);

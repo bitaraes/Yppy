@@ -150,7 +150,7 @@ createPost(file, title, gender, description, context) async {
     ..fields['title'] = title
     ..fields['gender'] = gender
     ..fields["description"] = description
-    ..fields['rating'] = "0"
+    ..fields['rating'] = "5"
     ..headers['Authorization'] = 'Bearer $token'
     ..files.add(await http.MultipartFile.fromPath('comic', file,
         contentType: MediaType('image', file.toString().split('.').last)));
