@@ -6,6 +6,7 @@ import 'package:flutter_application_1/main.dart';
 import 'package:flutter_application_1/profile.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_application_1/services/api.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -77,6 +78,8 @@ class UploadState extends State<Upload> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.bottom]);
     return Scaffold(
       bottomNavigationBar: BottomBar(),
       body: GestureDetector(

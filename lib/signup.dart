@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/login_page.dart';
 import 'package:flutter_application_1/main.dart';
 import 'package:flutter_application_1/services/api.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(
       MaterialApp(
@@ -49,6 +50,8 @@ class CadastrarState extends State<Cadastrar> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.bottom]);
     return Scaffold(
       body: GestureDetector(
         onTap: () {

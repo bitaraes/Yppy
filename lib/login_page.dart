@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/main.dart';
 import 'package:flutter_application_1/services/api.dart';
 import 'package:flutter_application_1/signup.dart';
+import 'package:flutter/services.dart';
 
 String email = "";
 String password = "";
@@ -41,6 +42,8 @@ class LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.bottom]);
     return FutureBuilder(
         future: getToken(),
         builder: (context, snapshot) {

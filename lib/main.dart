@@ -7,6 +7,7 @@ import 'package:flutter_application_1/signup.dart';
 import 'package:flutter_application_1/upload.dart';
 import 'package:flutter_application_1/components/bottom_bar/bottom_bar.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(MeuAplicativo());
 
@@ -56,6 +57,8 @@ class HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.bottom]);
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Color(0xFF752c98)),
