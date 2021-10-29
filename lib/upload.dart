@@ -29,7 +29,7 @@ class Upload extends StatefulWidget {
 class UploadState extends State<Upload> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  String file;
+  List file;
   String title;
   String description;
   String dropdownValue;
@@ -38,8 +38,7 @@ class UploadState extends State<Upload> {
     "Aventura",
     "Romance",
     "Fantasia",
-    "Ficção",
-    "Científica",
+    "Ficção Científica",
     "Drama",
     "Terror",
     "Suspense",
@@ -49,14 +48,20 @@ class UploadState extends State<Upload> {
   ];
 
   selectImage() async {
-    var fileName =
+    var result =
         // ignore: invalid_use_of_visible_for_testing_member
-        await FilePicker.platform.pickFiles(type: FileType.image);
-    if (fileName != null) {
-      file = fileName.files.single.path;
-      print(file);
+        await FilePicker.platform
+            .pickFiles(type: FileType.image, withData: true);
+
+    if (result.files.single.bytes != null) {
+      var fileBytes = result.files.single.bytes;
+      var fileName = result.files.single.name;
+      file = [fileBytes, fileName];
+      // print(fileBytes);
     } else {
-      print(file);
+      AlertDialog(
+        content: Text("errado"),
+      );
     }
   }
 

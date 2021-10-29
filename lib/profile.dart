@@ -42,70 +42,32 @@ class ProfileState extends State<Profile> {
           ),
           child: Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Column(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(
-                        top: 15,
-                        left: 10,
-                        right: 10,
-                      ),
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
+                      margin: EdgeInsets.only(top: 30),
+                      padding: EdgeInsets.all(20),
+                      height: MediaQuery.of(context).size.height * .7,
+                      width: MediaQuery.of(context).size.width * .9,
+                      decoration: BoxDecoration(color: Colors.white),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: Color(0xFF752c98),
+                            child: Text(
+                              "Photo",
+                              style: TextStyle(
+                                fontSize: 40,
+                                color: Colors.white,
+                              ),
                             ),
-                            padding: EdgeInsets.only(left: 60, right: 60)),
-                        child: Text(
-                          'Meus Dados',
-                          style: TextStyle(color: Colors.black),
-                        ),
+                          ),
+                        ],
                       ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(
-                        top: 15,
-                        left: 10,
-                        right: 10,
-                      ),
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                            ),
-                            padding: EdgeInsets.only(left: 60, right: 60)),
-                        child: Text(
-                          'Minhas Histórias',
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(
-                        top: 15,
-                        left: 10,
-                        right: 10,
-                      ),
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                            ),
-                            padding: EdgeInsets.only(left: 60, right: 60)),
-                        child: Text(
-                          'Configurações',
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ),
-                    ),
+                    )
                   ],
                 ),
               ],

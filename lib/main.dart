@@ -38,7 +38,7 @@ class HomeState extends State<Home> {
   String username = "";
 
   assetImage(image) {
-    String url = 'http://10.0.2.2/Comics/src$image';
+    String url = '$api$image';
     return ClipRRect(
         borderRadius: BorderRadius.circular(8),
         child: Container(
@@ -161,8 +161,8 @@ class HomeState extends State<Home> {
                                                           current.toString() +
                                                           " ")
                                                       .toString()
-                                                      .replaceAll("(", "")
-                                                      .replaceAll(")", "")),
+                                                      .replaceAll(
+                                                          RegExp("\/D/"), "")),
                                             ),
                                             Column(
                                               crossAxisAlignment:
@@ -331,8 +331,7 @@ class Carousel extends StatelessWidget {
                               child: ClipRRect(
                                   borderRadius: BorderRadius.circular(8),
                                   child: Image(
-                                      image: NetworkImage(
-                                          'http://10.0.2.2/Comics/src$e'),
+                                      image: NetworkImage('$api$e'),
                                       fit: BoxFit.cover)),
                             ),
                           ),

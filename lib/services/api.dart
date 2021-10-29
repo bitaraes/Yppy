@@ -4,9 +4,10 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:flutter/material.dart';
 
-var api = "http://10.0.2.2:8080";
+var api = "https://comics-yppy.herokuapp.com";
 
 signin(email, password, context) async {
+  print("object");
   var req = await http.post(
     Uri.parse(api + "/auth"),
     headers: {
@@ -146,59 +147,67 @@ getPosts() async {
 
 createPost(file, title, gender, description, context) async {
   var token = await getToken();
-  var req = http.MultipartRequest('POST', Uri.parse(api + '/comics'))
-    ..fields['title'] = title
-    ..fields['gender'] = gender
-    ..fields["description"] = description
-    ..fields['rating'] = "5"
-    ..headers['Authorization'] = 'Bearer $token'
-    ..files.add(await http.MultipartFile.fromPath('comic', file,
-        contentType: MediaType('image', file.toString().split('.').last)));
-  req.send().then((response) => {
-        if (response.statusCode == 200)
-          {
-            showDialog(
-              context: context,
-              builder: (_) => AlertDialog(
-                title: Text(
-                  'Sucesso',
-                  textAlign: TextAlign.center,
+  try {
+    var req = http.MultipartRequest('POST', Uri.parse(api + '/comics'))
+      ..fields['title'] = title
+      ..fields['gender'] = gender
+      ..fields["description"] = description
+      ..fields['rating'] = "5"
+      ..headers['Authorization'] = 'Bearer $token'
+      ..files.add(http.MultipartFile.fromBytes('comic', file[0],
+          contentType: MediaType('image', file.toString().split('.').last),
+          filename: file[1]));
+    req.send().then(
+          (response) => {
+            if (response.statusCode == 200)
+              {
+                showDialog(
+                  context: context,
+                  builder: (_) => AlertDialog(
+                    title: Text(
+                      'Sucesso',
+                      textAlign: TextAlign.center,
+                    ),
+                    content: Text(
+                      'Sua história foi publicada com sucesso!',
+                      textAlign: TextAlign.center,
+                    ),
+                    actions: [
+                      ElevatedButton(
+                        onPressed: () => {
+                          Navigator.of(context).pushReplacementNamed('/home')
+                        },
+                        child: Text('Ok'),
+                      ),
+                    ],
+                  ),
                 ),
-                content: Text(
-                  'Sua história foi publicada com sucesso!',
-                  textAlign: TextAlign.center,
+              }
+            else
+              {
+                showDialog(
+                  context: context,
+                  builder: (_) => AlertDialog(
+                    title: Text(
+                      'Erro',
+                      textAlign: TextAlign.center,
+                    ),
+                    content: Text(
+                      'Aconteceu um erro durante a postagem, tente novamente mais tarde',
+                      textAlign: TextAlign.center,
+                    ),
+                    actions: [
+                      ElevatedButton(
+                        onPressed: () => {Navigator.pop(context)},
+                        child: Text('Ok'),
+                      ),
+                    ],
+                  ),
                 ),
-                actions: [
-                  ElevatedButton(
-                    onPressed: () =>
-                        {Navigator.of(context).pushReplacementNamed('/home')},
-                    child: Text('Ok'),
-                  )
-                ],
-              ),
-            )
-          }
-        else
-          {
-            showDialog(
-              context: context,
-              builder: (_) => AlertDialog(
-                title: Text(
-                  'Erro',
-                  textAlign: TextAlign.center,
-                ),
-                content: Text(
-                  'Aconteceu um erro durante a postagem, tente novamente mais tarde',
-                  textAlign: TextAlign.center,
-                ),
-                actions: [
-                  ElevatedButton(
-                    onPressed: () => {Navigator.pop(context)},
-                    child: Text('Ok'),
-                  )
-                ],
-              ),
-            )
-          }
-      });
+              },
+          },
+        );
+  } catch (e) {
+    print(e);
+  }
 }
