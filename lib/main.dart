@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/components/carousel/carousel.dart';
 import 'package:flutter_application_1/login_page.dart';
 import 'package:flutter_application_1/profile.dart';
 import 'package:flutter_application_1/services/api.dart';
@@ -37,8 +38,8 @@ class Home extends StatefulWidget {
 class HomeState extends State<Home> {
   String username = "";
 
-  assetImage(image) {
-    String url = '$api$image';
+  comicImage(imageUrl) {
+    String url = '$api$imageUrl';
     return ClipRRect(
         borderRadius: BorderRadius.circular(8),
         child: Container(
@@ -113,21 +114,20 @@ class HomeState extends State<Home> {
                           child: Column(
                             children: [
                               Container(
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
                                 child: Row(
                                   children: [
                                     Container(
                                       constraints:
                                           BoxConstraints(maxHeight: 150),
-                                      child: assetImage(e['comicUrl']),
+                                      child: comicImage(e['comicUrl']),
                                     ),
                                     Expanded(
                                       child: Container(
-                                        padding: EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
                                         constraints:
                                             BoxConstraints(minHeight: 150),
                                         child: Column(
@@ -229,120 +229,71 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: getUser(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            print("Ocorreu um erro");
-          }
+      future: getUser(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          print("Ocorreu um erro");
+        }
 
-          if (snapshot.hasData) {
-            return ListView(
-              children: [
-                // ignore: missing_required_param
-                UserAccountsDrawerHeader(
-                  decoration: BoxDecoration(
-                    color: Color(0xFF752c98),
-                  ),
-                  accountName: Text(snapshot.data[0].replaceFirst(
-                      snapshot.data[0][0], snapshot.data[0][0].toUpperCase())),
-                  currentAccountPicture: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    child: Text(
-                      snapshot.data[0][0].toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 40,
-                        color: Colors.black,
-                      ),
+        if (snapshot.hasData) {
+          return ListView(
+            children: [
+              // ignore: missing_required_param
+              UserAccountsDrawerHeader(
+                decoration: BoxDecoration(
+                  color: Color(0xFF752c98),
+                ),
+                accountName: Text(snapshot.data[0].replaceFirst(
+                    snapshot.data[0][0], snapshot.data[0][0].toUpperCase())),
+                currentAccountPicture: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Text(
+                    snapshot.data[0][0].toUpperCase(),
+                    style: TextStyle(
+                      fontSize: 40,
+                      color: Colors.black,
                     ),
                   ),
                 ),
-                ListTile(
-                  leading: Icon(Icons.home),
-                  title: Text("Home"),
-                  subtitle: Text("Ir para Home"),
-                  trailing: Icon(Icons.arrow_forward),
-                  onTap: () {
-                    print('Voltar para o Inicio.');
-                    Navigator.pop(context);
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.account_circle_outlined),
-                  title: Text("Perfil"),
-                  subtitle: Text("Siga para ver o seu perfil."),
-                  trailing: Icon(Icons.arrow_forward),
-                  onTap: () {
-                    print('Ir para postagens.');
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.logout),
-                  title: Text("Logout"),
-                  subtitle: Text("Faça Logout"),
-                  trailing: Icon(Icons.arrow_forward),
-                  onTap: () {
-                    logout();
-                    Navigator.of(context).pushReplacementNamed('/');
-                  },
-                ),
-              ],
-            );
-          }
-          return CircularProgressIndicator(
-            backgroundColor: Colors.blue,
+              ),
+              ListTile(
+                leading: Icon(Icons.home),
+                title: Text("Home"),
+                subtitle: Text("Ir para Home"),
+                trailing: Icon(Icons.arrow_forward),
+                onTap: () {
+                  print('Voltar para o Inicio.');
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.account_circle_outlined),
+                title: Text("Perfil"),
+                subtitle: Text("Siga para ver o seu perfil."),
+                trailing: Icon(Icons.arrow_forward),
+                onTap: () {
+                  print('Ir para postagens.');
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.logout),
+                title: Text("Logout"),
+                subtitle: Text("Faça Logout"),
+                trailing: Icon(Icons.arrow_forward),
+                onTap: () {
+                  logout();
+                  Navigator.of(context).pushReplacementNamed('/');
+                },
+              ),
+            ],
           );
-        });
+        }
+        return CircularProgressIndicator(
+          backgroundColor: Colors.blue,
+        );
+      },
+    );
   }
 
   mountMenu(BuildContext context) {}
-}
-
-// ignore: must_be_immutable
-class Carousel extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: FutureBuilder(
-          future: getPosts(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              List<String> posts = [];
-              snapshot.data.map((e) => posts.add(e['comicUrl'])).toString();
-              return Container(
-                decoration:
-                    BoxDecoration(border: Border.all(color: Colors.grey)),
-                child: CarouselSlider(
-                  options: CarouselOptions(
-                      disableCenter: true, viewportFraction: 0.30),
-                  items: posts
-                      .map(
-                        (e) => Container(
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(color: Colors.black12))),
-                          child: Center(
-                            child: Container(
-                              padding: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(15)),
-                              constraints: BoxConstraints(minHeight: 160),
-                              child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: Image(
-                                      image: NetworkImage('$api$e'),
-                                      fit: BoxFit.cover)),
-                            ),
-                          ),
-                        ),
-                      )
-                      .toList(),
-                ),
-              );
-            }
-            return Container();
-          }),
-    );
-  }
 }
