@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/components/bottom_bar/bottom_bar.dart';
+// import 'package:flutter_application_1/components/bottom_bar/bottom_bar.dart';
 import 'package:flutter_application_1/signup.dart';
 import 'package:flutter_application_1/login_page.dart';
 import 'package:flutter_application_1/main.dart';
@@ -30,7 +30,7 @@ class ProfileState extends State<Profile> {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.bottom]);
     return Scaffold(
-      bottomNavigationBar: BottomBar(),
+      // bottomNavigationBar: BottomBar(),
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height * 1,

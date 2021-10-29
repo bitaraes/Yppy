@@ -67,7 +67,8 @@ class ComicDashboard extends StatelessWidget {
                                               .map((current) =>
                                                   current.toString() + " ")
                                               .toString()
-                                              .replaceAll(RegExp("\/D/"), "")),
+                                              .replaceAll(
+                                                  RegExp("[/\(\)]"), "")),
                                     ),
                                     Column(
                                       crossAxisAlignment:

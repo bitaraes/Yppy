@@ -15,24 +15,23 @@ class Carousel extends StatelessWidget {
               List<String> posts = [];
               snapshot.data.map((e) => posts.add(e['comicUrl'])).toString();
               return Container(
-                decoration:
-                    BoxDecoration(border: Border.all(color: Colors.grey)),
+                decoration: BoxDecoration(
+                  border: Border(top: BorderSide(color: Colors.black)),
+                ),
                 child: CarouselSlider(
                   options: CarouselOptions(
-                      disableCenter: false, viewportFraction: 0.30),
+                      disableCenter: false, viewportFraction: 0.28),
                   items: posts
                       .map(
                         (e) => Container(
                           padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(color: Colors.black12))),
                           child: Center(
                             child: Container(
-                              padding: EdgeInsets.all(5),
+                              padding: EdgeInsets.all(3),
                               decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(15)),
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(15),
+                                  border: Border.all(color: Colors.black)),
                               constraints: BoxConstraints(minHeight: 160),
                               child: ClipRRect(
                                   borderRadius: BorderRadius.circular(8),
@@ -47,7 +46,12 @@ class Carousel extends StatelessWidget {
                 ),
               );
             }
-            return Container();
+            return Container(
+              margin: EdgeInsets.all(15),
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
           }),
     );
   }

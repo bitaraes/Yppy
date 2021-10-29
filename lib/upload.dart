@@ -1,23 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/components/bottom_bar/bottom_bar.dart';
-import 'package:flutter_application_1/signup.dart';
-import 'package:flutter_application_1/login_page.dart';
-import 'package:flutter_application_1/main.dart';
-import 'package:flutter_application_1/profile.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_application_1/services/api.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-  runApp(MaterialApp(
-    routes: {
-      '/': (context) => Home(),
-      '/login': (context) => Login(),
-      '/signup': (context) => Cadastrar(),
-      '/profile': (context) => Profile(),
-      '/upload': (context) => Upload(),
-    },
-  ));
+  runApp(Upload());
 }
 
 class Upload extends StatefulWidget {
@@ -86,7 +73,7 @@ class UploadState extends State<Upload> {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.bottom]);
     return Scaffold(
-      bottomNavigationBar: BottomBar(),
+      // bottomNavigationBar: BottomBar(),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());

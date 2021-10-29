@@ -1,14 +1,12 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/components/carousel/carousel.dart';
-import 'package:flutter_application_1/components/comics-dashboard/comics-dashboard.dart';
-import 'package:flutter_application_1/components/drawer/drawer.dart';
+
+import 'package:flutter_application_1/home_page.dart';
 import 'package:flutter_application_1/login_page.dart';
 import 'package:flutter_application_1/profile.dart';
 import 'package:flutter_application_1/services/api.dart';
 import 'package:flutter_application_1/signup.dart';
 import 'package:flutter_application_1/upload.dart';
-import 'package:flutter_application_1/components/bottom_bar/bottom_bar.dart';
+// import 'package:flutter_application_1/components/bottom_bar/bottom_bar.dart';
 
 import 'package:flutter/services.dart';
 
@@ -39,7 +37,13 @@ class Home extends StatefulWidget {
 
 class HomeState extends State<Home> {
   String username = "";
-
+  int _indiceAtual = 0;
+  int _barMovement = 0;
+  List<Widget> pages = [
+    HomePage(),
+    Upload(),
+    Profile(),
+  ];
   mountUser() async {
     String user = await getUser();
     setState(() {
@@ -53,56 +57,97 @@ class HomeState extends State<Home> {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.bottom]);
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Color(0xFF752c98)),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(),
-            Row(
-              children: [
-                Container(
-                  height: 50,
-                  child: Image(
-                    image: AssetImage("assets/img/fundo_transparente.png"),
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              child: IconButton(
-                icon: Icon(
-                  Icons.notifications,
-                  color: Colors.black,
-                ),
-                onPressed: () {},
-              ),
-            ),
-          ],
-        ),
-        backgroundColor: Colors.white,
-      ),
       body: Container(
+        width: MediaQuery.of(context).size.width * 1,
+        height: MediaQuery.of(context).size.height * 1,
         decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage('assets/img/tela_de_fundo_app.jpg'),
               fit: BoxFit.cover),
         ),
-        child: ListView(
-          children: [
-            Container(
-              height: 180,
-              child: Carousel(),
-            ),
-            ComicDashboard(),
-          ],
+        child: pages[_indiceAtual],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Container(
+          decoration: BoxDecoration(color: Color(0xFF23D4D2)),
+          child: Stack(
+            alignment: AlignmentDirectional.centerStart,
+            children: [
+              AnimatedContainer(
+                transform: Matrix4.translationValues(
+                    MediaQuery.of(context).size.width * (_barMovement * 0.2),
+                    0,
+                    0),
+                duration: Duration(milliseconds: 300),
+                decoration: BoxDecoration(color: Color(0xFFed1d7f)),
+                height: MediaQuery.of(context).size.height * 0.07,
+                width: MediaQuery.of(context).size.width * 0.20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      Icons.home_sharp,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _indiceAtual = 0;
+                        _barMovement = 0;
+                      });
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.search_sharp,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _barMovement = 1;
+                      });
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.library_add_sharp,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _indiceAtual = 1;
+                        _barMovement = 2;
+                      });
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.notifications_sharp),
+                    color: Colors.white,
+                    onPressed: () {
+                      setState(() {
+                        _barMovement = 3;
+                      });
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.person_sharp,
+                    ),
+                    color: Colors.white,
+                    onPressed: () {
+                      setState(() {
+                        _indiceAtual = 2;
+                        _barMovement = 4;
+                      });
+                    },
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
-      drawer: Drawer(
-        child: MyDrawer(),
-      ),
-      bottomNavigationBar: BottomBar(),
     );
   }
 }
