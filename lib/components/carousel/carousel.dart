@@ -5,6 +5,13 @@ import 'package:flutter_application_1/services/api.dart';
 void main() => runApp(Carousel());
 
 class Carousel extends StatelessWidget {
+  carouselImage(url) {
+    Widget image = findImage(url).then((value) => value).toString() == "404"
+        ? Image(image: NetworkImage(url))
+        : Image(image: AssetImage("assets/img/yppyverse_logo_1.png"));
+    return image;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,10 +41,9 @@ class Carousel extends StatelessWidget {
                                   border: Border.all(color: Colors.black)),
                               constraints: BoxConstraints(minHeight: 160),
                               child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: Image(
-                                      image: NetworkImage('$api$e'),
-                                      fit: BoxFit.cover)),
+                                borderRadius: BorderRadius.circular(8),
+                                child: carouselImage('$api$e'),
+                              ),
                             ),
                           ),
                         ),

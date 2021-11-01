@@ -7,12 +7,17 @@ void main() => runApp(ComicDashboard());
 class ComicDashboard extends StatelessWidget {
   comicImage(imageUrl, context) {
     String url = '$api$imageUrl';
+    Widget image = findImage(url).then((value) => value).toString() == "404"
+        ? Image(image: NetworkImage(url))
+        : Image(image: AssetImage("assets/img/yppyverse_logo_1.png"));
+
     return ClipRRect(
-        borderRadius: BorderRadius.circular(8),
-        child: Container(
-          width: MediaQuery.of(context).size.width * 0.30,
-          child: Image.network(url, fit: BoxFit.contain),
-        ));
+      borderRadius: BorderRadius.circular(8),
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.30,
+        child: image,
+      ),
+    );
   }
 
   @override
@@ -62,13 +67,15 @@ class ComicDashboard extends StatelessWidget {
                                     ),
                                     Container(
                                       margin: EdgeInsets.only(bottom: 10),
-                                      child: Text("Gênero: " +
-                                          e['gender']
-                                              .map((current) =>
-                                                  current.toString() + " ")
-                                              .toString()
-                                              .replaceAll(
-                                                  RegExp("[/\(\)]"), "")),
+                                      child: Text(
+                                        "Gênero: " +
+                                            e['gender']
+                                                .map((current) =>
+                                                    current.toString() + " ")
+                                                .toString()
+                                                .replaceAll(
+                                                    RegExp("[/\(\)]"), ""),
+                                      ),
                                     ),
                                     Column(
                                       crossAxisAlignment:
@@ -81,7 +88,8 @@ class ComicDashboard extends StatelessWidget {
                                         Container(
                                           child: RatingBarIndicator(
                                             rating: double.tryParse(
-                                                e['rating'].toString()),
+                                              e['rating'].toString(),
+                                            ),
                                             itemBuilder: (context, index) =>
                                                 Icon(
                                               Icons.star,
@@ -91,7 +99,7 @@ class ComicDashboard extends StatelessWidget {
                                           ),
                                         ),
                                       ],
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),

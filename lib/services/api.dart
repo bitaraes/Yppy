@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 var api = "https://comics-yppy.herokuapp.com";
 
 signin(email, password, context) async {
-  print("object");
   var req = await http.post(
     Uri.parse(api + "/auth"),
     headers: {
@@ -210,4 +209,9 @@ createPost(file, title, gender, description, context) async {
   } catch (e) {
     print(e);
   }
+}
+
+Future<int> findImage(url) async {
+  var response = await http.get(Uri.parse(url));
+  return response.statusCode;
 }
