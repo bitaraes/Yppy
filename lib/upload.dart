@@ -44,7 +44,6 @@ class UploadState extends State<Upload> {
       var fileBytes = result.files.single.bytes;
       var fileName = result.files.single.name;
       file = [fileBytes, fileName];
-      // print(fileBytes);
     } else {
       AlertDialog(
         content: Text("errado"),
@@ -73,7 +72,6 @@ class UploadState extends State<Upload> {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.bottom]);
     return Scaffold(
-      // bottomNavigationBar: BottomBar(),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());

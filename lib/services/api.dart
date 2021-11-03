@@ -70,7 +70,6 @@ signup(data, context) async {
       ),
     );
   } else {
-    print(req.statusCode);
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
@@ -154,7 +153,7 @@ createPost(file, title, gender, description, context) async {
       ..fields['rating'] = "5"
       ..headers['Authorization'] = 'Bearer $token'
       ..files.add(http.MultipartFile.fromBytes('comic', file[0],
-          contentType: MediaType('image', file.toString().split('.').last),
+          contentType: MediaType('image', file[1].toString().split('.').last),
           filename: file[1]));
     req.send().then(
           (response) => {
@@ -209,9 +208,4 @@ createPost(file, title, gender, description, context) async {
   } catch (e) {
     print(e);
   }
-}
-
-Future<int> findImage(url) async {
-  var response = await http.get(Uri.parse(url));
-  return response.statusCode;
 }

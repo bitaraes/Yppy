@@ -7,10 +7,7 @@ void main() => runApp(ComicDashboard());
 class ComicDashboard extends StatelessWidget {
   comicImage(imageUrl, context) {
     String url = '$api$imageUrl';
-    Widget image = findImage(url).then((value) => value).toString() == "404"
-        ? Image(image: NetworkImage(url))
-        : Image(image: AssetImage("assets/img/yppyverse_logo_1.png"));
-
+    Widget image = Image(image: NetworkImage(url));
     return ClipRRect(
       borderRadius: BorderRadius.circular(8),
       child: Container(

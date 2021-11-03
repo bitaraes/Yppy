@@ -6,9 +6,7 @@ void main() => runApp(Carousel());
 
 class Carousel extends StatelessWidget {
   carouselImage(url) {
-    Widget image = findImage(url).then((value) => value).toString() == "404"
-        ? Image(image: NetworkImage(url))
-        : Image(image: AssetImage("assets/img/yppyverse_logo_1.png"));
+    Widget image = Image(image: NetworkImage(url));
     return image;
   }
 

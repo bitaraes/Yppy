@@ -11,7 +11,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        elevation: 0,
+        elevation: 1,
         iconTheme: IconThemeData(color: Color(0xFFffffff)),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -42,7 +42,7 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
-        backgroundColor: Colors.transparent,
+        backgroundColor: Color(0xFF23D4D2),
       ),
       body: Container(
         decoration: BoxDecoration(
