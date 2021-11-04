@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_application_1/home_page.dart';
 import 'package:flutter_application_1/login_page.dart';
 import 'package:flutter_application_1/profile.dart';
 import 'package:flutter_application_1/services/api.dart';
 import 'package:flutter_application_1/signup.dart';
 import 'package:flutter_application_1/upload.dart';
-// import 'package:flutter_application_1/components/bottom_bar/bottom_bar.dart';
-
+import 'package:flutter_application_1/components/drawer/drawer.dart';
 import 'package:flutter/services.dart';
 
 void main() => runApp(MeuAplicativo());
@@ -57,6 +55,43 @@ class HomeState extends State<Home> {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.bottom]);
     return Scaffold(
+      drawer: Drawer(
+        child: MyDrawer(),
+      ),
+      appBar: AppBar(
+        elevation: 0,
+        iconTheme: IconThemeData(color: Color(0xFFffffff)),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(),
+            Row(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(300),
+                      color: Colors.white),
+                  height: 50,
+                  child: Image(
+                    image: AssetImage("assets/img/fundo_transparente.png"),
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              child: IconButton(
+                icon: Icon(
+                  Icons.settings_rounded,
+                  color: Colors.white,
+                ),
+                onPressed: () {},
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: Color(0xFF23D4D2),
+      ),
       body: Container(
         width: MediaQuery.of(context).size.width * 1,
         height: MediaQuery.of(context).size.height * 1,

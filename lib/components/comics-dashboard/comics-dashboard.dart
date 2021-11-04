@@ -23,95 +23,116 @@ class ComicDashboard extends StatelessWidget {
       future: getPosts(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          var postData = snapshot.data
-              .map<Widget>(
-                (e) => Container(
-                  padding: EdgeInsets.all(5),
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              constraints: BoxConstraints(maxHeight: 150),
-                              child: comicImage(e['comicUrl'], context),
-                            ),
-                            Expanded(
-                              child: Container(
-                                constraints: BoxConstraints(minHeight: 150),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(bottom: 10),
-                                      child: Text(
-                                        e['title'],
-                                        style: TextStyle(
-                                          fontSize: 22,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(bottom: 10),
-                                      child: Text(
-                                        "Autor: " + e['author']['username'],
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(bottom: 10),
-                                      child: Text(
-                                        "Gênero: " +
-                                            e['gender']
-                                                .map((current) =>
-                                                    current.toString() + " ")
-                                                .toString()
-                                                .replaceAll(
-                                                    RegExp("[/\(\)]"), ""),
-                                      ),
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.only(bottom: 10),
-                                          child: Text("Classificação: "),
-                                        ),
-                                        Container(
-                                          child: RatingBarIndicator(
-                                            rating: double.tryParse(
-                                              e['rating'].toString(),
-                                            ),
-                                            itemBuilder: (context, index) =>
-                                                Icon(
-                                              Icons.star,
-                                              color: Colors.amber,
-                                            ),
-                                            itemSize: 30,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+          if (snapshot.data.toString() == "[]") {
+            return Center(
+              child: Container(
+                width: 250,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: Center(
+                  child: Text(
+                    "Não há histórias para exibir",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(),
                   ),
                 ),
-              )
-              .toList();
-          return Column(
-            children: postData,
-          );
+              ),
+            );
+          } else {
+            var postData = snapshot.data
+                .map<Widget>(
+                  (e) => Container(
+                    padding: EdgeInsets.all(5),
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Row(
+                            children: [
+                              Container(
+                                constraints: BoxConstraints(maxHeight: 150),
+                                child: comicImage(e['comicUrl'], context),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  constraints: BoxConstraints(minHeight: 150),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(bottom: 10),
+                                        child: Text(
+                                          e['title'],
+                                          style: TextStyle(
+                                            fontSize: 22,
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.only(bottom: 10),
+                                        child: Text(
+                                          "Autor: " + e['author']['username'],
+                                        ),
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.only(bottom: 10),
+                                        child: Text(
+                                          "Gênero: " +
+                                              e['gender']
+                                                  .map((current) =>
+                                                      current.toString() + " ")
+                                                  .toString()
+                                                  .replaceAll(
+                                                      RegExp("[/\(\)]"), ""),
+                                        ),
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.only(bottom: 10),
+                                            child: Text("Classificação: "),
+                                          ),
+                                          Container(
+                                            child: RatingBarIndicator(
+                                              rating: double.tryParse(
+                                                e['rating'].toString(),
+                                              ),
+                                              itemBuilder: (context, index) =>
+                                                  Icon(
+                                                Icons.star,
+                                                color: Colors.amber,
+                                              ),
+                                              itemSize: 30,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+                .toList();
+            return Column(
+              children: postData,
+            );
+          }
         } else {
           return Container(
             margin: EdgeInsets.all(15),
